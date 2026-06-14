@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PDV Simples - Netlify</title>
+  <style>
+    :root {
+      --bg: #f3f4f6;
+      --card: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --danger: #dc2626;
+      --success: #16a34a;
+      --warning: #d97706;
+      --border: #e5e7eb;
+      --shadow: 0 10px 25px rgba(0,0,0,.08);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    header {
+      background: linear-gradient(135deg, #1d4ed8, #2563eb);
+      color: white;
+      padding: 18px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: var(--shadow);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    header p {
+      margin: 6px 0 0;
+      opacity: .9;
+      font-size: 14px;
+    }
+
+    main {
+      width: min(1200px, 100%);
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .tab-btn {
+      border: 0;
+      padding: 12px 8px;
+      border-radius: 12px;
+      background: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,.05);
+      cursor: pointer;
+      font-weight: bold;
+      color: var(--text);
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
+      margin-bottom: 16px;
+    }
+
+    h2, h3 {
+      margin-top: 0;
+    }
+
+    label {
+      font-size: 13px;
+      font-weight: bold;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-size: 16px;
+      background: white;
+    }
+
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .full { grid-column: 1 / -1; }
+
+    button {
+      border: 0;
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      background: var(--primary);
+      color: white;
+    }
+
+    button:hover {
+      background: var(--primary-dark);
+    }
+
+    button.secondary {
+      background: #374151;
+    }
+
+    button.danger {
+      background: var(--danger);
+    }
+
+    button.success {
+      background: var(--success);
+    }
+
+    button.warning {
+      background: var(--warning);
+    }
+
+    button.light {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 12px;
+    }
+
+    .product-card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px;
+      background: #fafafa;
+    }
+
+    .product-card h4 {
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .price {
+      font-size: 20px;
+      font-weight: bold;
+      color: var(--success);
+      margin: 8px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 12px;
+      background: white;
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--border);
+      padding: 10px;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    th {
+      background: #f9fafb;
+      color: var(--muted);
+    }
+
+    .totals {
+      display: grid;
+      gap: 8px;
+      font-size: 16px;
+    }
+
+    .total-big {
+      font-size: 30px;
+      font-weight: bold;
+      color: var(--success);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: bold;
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .low-stock {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .empty {
+      text-align: center;
+      color: var(--muted);
+      padding: 24px;
+      border: 1px dashed var(--border);
+      border-radius: 14px;
+      background: #fafafa;
+    }
+
+    .receipt {
+      font-family: monospace;
+      white-space: pre-wrap;
+      background: #fff;
+      border: 1px dashed #999;
+      padding: 14px;
+      border-radius: 12px;
+    }
+
+    .notice {
+      padding: 12px;
+      border-radius: 12px;
+      background: #ecfeff;
+      border: 1px solid #a5f3fc;
+      color: #155e75;
+      margin-bottom: 12px;
+    }
+
+    @media (max-width: 800px) {
+      .grid, .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tabs {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      table {
+        font-size: 13px;
+      }
+
+      th, td {
+        padding: 8px;
+      }
+
+      header h1 {
+        font-size: 20px;
+      }
+    }
+
+    @media print {
+      body * { visibility: hidden; }
+      #printArea, #printArea * { visibility: visible; }
+      #printArea {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+      }
+      header, .tabs, button, input, select, textarea { display: none !important; }
+      .card { box-shadow: none; border: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>PDV Simples</h1>
+    <p>Sistema de vendas com produtos, estoque, recibo e histórico — pronto para Netlify.</p>
+  </header>
+
+  <main>
+    <nav class="tabs">
+      <button class="tab-btn active" onclick="showTab('vendas', this)">Vendas</button>
+      <button class="tab-btn" onclick="showTab('produtos', this)">Produtos</button>
+      <button class="tab-btn" onclick="showTab('historico', this)">Histórico</button>
+      <button class="tab-btn" onclick="showTab('relatorios', this)">Relatórios</button>
+      <button class="tab-btn" onclick="showTab('backup', this)">Backup</button>
+    </nav>
+
+    <section id="vendas" class="section active">
+      <div class="grid">
+        <div>
+          <div class="card">
+            <h2>Nova venda</h2>
+            <input id="searchProduct" placeholder="Buscar produto por nome, código ou categoria..." oninput="renderSaleProducts()" />
+          </div>
+          <div id="saleProducts" class="products-grid"></div>
+        </div>
+
+        <aside>
+          <div class="card">
+            <h2>Carrinho</h2>
+            <div id="cartItems"></div>
+
+            <div class="totals">
+              <div>Subtotal: <strong id="subtotal">R$ 0,00</strong></div>
+              <label>Desconto</label>
+              <input id="discount" type="number" min="0" step="0.01" value="0" oninput="renderCart()" />
+              <div>Total:</div>
+              <div class="total-big" id="total">R$ 0,00</div>
+
+              <label>Forma de pagamento</label>
+              <select id="paymentMethod">
+                <option>Dinheiro</option>
+                <option>PIX</option>
+                <option>Cartão de Débito</option>
+                <option>Cartão de Crédito</option>
+              </select>
+
+              <label>Valor recebido</label>
+              <input id="amountPaid" type="number" min="0" step="0.01" value="0" oninput="renderCart()" />
+              <div>Troco: <strong id="change">R$ 0,00</strong></div>
+            </div>
+
+            <div class="actions">
+              <button class="success" onclick="finishSale()">Finalizar venda</button>
+              <button class="light" onclick="clearCart()">Limpar</button>
+            </div>
+          </div>
+
+          <div id="printArea" class="card">
+            <h3>Último recibo</h3>
+            <div id="receipt" class="receipt">Nenhuma venda finalizada ainda.</div>
+            <div class="actions">
+              <button onclick="window.print()">Imprimir recibo</button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="produtos" class="section">
+      <div class="grid">
+        <div class="card">
+          <h2>Cadastro de produtos</h2>
+          <input type="hidden" id="editingProductId" />
+          <div class="form-grid">
+            <div>
+              <label>Código</label>
+              <input id="productCode" placeholder="Ex: 001 ou código de barras" />
+            </div>
+            <div>
+              <label>Nome</label>
+              <input id="productName" placeholder="Ex: Água Mineral 500ml" />
+            </div>
+            <div>
+              <label>Preço</label>
+              <input id="productPrice" type="number" min="0" step="0.01" placeholder="Ex: 3.50" />
+            </div>
+            <div>
+              <label>Estoque</label>
+              <input id="productStock" type="number" min="0" step="1" placeholder="Ex: 10" />
+            </div>
+            <div>
+              <label>Categoria</label>
+              <input id="productCategory" placeholder="Ex: Bebidas" />
+            </div>
+            <div>
+              <label>Estoque mínimo</label>
+              <input id="productMinStock" type="number" min="0" step="1" value="3" />
+            </div>
+            <div class="full">
+              <label>Descrição</label>
+              <textarea id="productDescription" placeholder="Descrição opcional"></textarea>
+            </div>
+          </div>
+          <div class="actions">
+            <button onclick="saveProduct()">Salvar produto</button>
+            <button class="light" onclick="clearProductForm()">Cancelar/Limpar</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Produtos cadastrados</h2>
+          <input id="productListSearch" placeholder="Buscar na lista..." oninput="renderProductsTable()" />
+          <div id="productsTable"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="historico" class="section">
+      <div class="card">
+        <h2>Histórico de vendas</h2>
+        <div id="salesHistory"></div>
+      </div>
+    </section>
+
+    <section id="relatorios" class="section">
+      <div class="card">
+        <h2>Relatórios</h2>
+        <div id="reports"></div>
+      </div>
+    </section>
+
+    <section id="backup" class="section">
+      <div class="card">
+        <h2>Backup e restauração</h2>
+        <div class="notice">
+          Os dados ficam salvos no navegador deste aparelho. Faça backup regularmente para evitar perda de informações.
+        </div>
+        <div class="actions">
+          <button onclick="downloadBackup()">Baixar backup JSON</button>
+          <button class="warning" onclick="document.getElementById('backupFile').click()">Restaurar backup</button>
+          <button class="danger" onclick="resetAllData()">Apagar todos os dados</button>
+        </div>
+        <input id="backupFile" type="file" accept=".json" style="display:none" onchange="restoreBackup(event)" />
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const STORAGE_KEY = "pdv_simples_netlify_v1";
+
+    let state = loadState();
+    let cart = [];
+
+    function money(value) {
+      return Number(value || 0).toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+      });
+    }
+
+    function uid() {
+      return Date.now().toString(36) + Math.random().toString(36).slice(2);
+    }
+
+    function defaultState() {
+      return {
+        products: [
+          {
+            id: uid(),
+            code: "001",
+            name: "Produto exemplo",
+            price: 10,
+            stock: 20,
+            minStock: 3,
+            category: "Geral",
+            description: "Produto inicial para teste."
+          }
+        ],
+        sales: []
+      };
+    }
+
+    function loadState() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (!saved) return defaultState();
+
+      try {
+        return JSON.parse(saved);
+      } catch {
+        return defaultState();
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function showTab(id, button) {
+      document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+      button.classList.add("active");
+
+      renderAll();
+    }
+
+    function renderAll() {
+      renderSaleProducts();
+      renderCart();
+      renderProductsTable();
+      renderSalesHistory();
+      renderReports();
+    }
+
+    function renderSaleProducts() {
+      const box = document.getElementById("saleProducts");
+      const term = (document.getElementById("searchProduct").value || "").toLowerCase();
+
+      const products = state.products.filter(p => {
+        return [p.name, p.code, p.category].join(" ").toLowerCase().includes(term);
+      });
+
+      if (!products.length) {
+        box.innerHTML = '<div class="empty">Nenhum produto encontrado.</div>';
+        return;
+      }
+
+      box.innerHTML = products.map(p => `
+        <div class="product-card">
+          <h4>${escapeHtml(p.name)}</h4>
+          <div class="muted">Código: ${escapeHtml(p.code || "-")}</div>
+          <div class="muted">Categoria: ${escapeHtml(p.category || "-")}</div>
+          <div class="price">${money(p.price)}</div>
+          <div class="badge ${Number(p.stock) <= Number(p.minStock || 0) ? "low-stock" : ""}">
+            Estoque: ${p.stock}
+          </div>
+          <div class="actions">
+            <button ${p.stock <= 0 ? "disabled" : ""} onclick="addToCart('${p.id}')">Adicionar</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function addToCart(productId) {
+      const product = state.products.find(p => p.id === productId);
+      if (!product || product.stock <= 0) return alert("Produto sem estoque.");
+
+      const item = cart.find(i => i.productId === productId);
+      if (item) {
+        if (item.qty + 1 > product.stock) return alert("Quantidade maior que o estoque disponível.");
+        item.qty++;
+      } else {
+        cart.push({
+          productId: product.id,
+          code: product.code,
+          name: product.name,
+          price: Number(product.price),
+          qty: 1
+        });
+      }
+
+      renderCart();
+    }
+
+    function changeQty(productId, qty) {
+      const product = state.products.find(p => p.id === productId);
+      const item = cart.find(i => i.productId === productId);
+      if (!item || !product) return;
+
+      qty = Number(qty);
+      if (qty <= 0) {
+        cart = cart.filter(i => i.productId !== productId);
+      } else if (qty > product.stock) {
+        alert("Quantidade maior que o estoque disponível.");
+        item.qty = product.stock;
+      } else {
+        item.qty = qty;
+      }
+
+      renderCart();
+    }
+
+    function removeFromCart(productId) {
+      cart = cart.filter(i => i.productId !== productId);
+      renderCart();
+    }
+
+    function clearCart() {
+      cart = [];
+      document.getElementById("discount").value = 0;
+      document.getElementById("amountPaid").value = 0;
+      renderCart();
+    }
+
+    function cartSubtotal() {
+      return cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+    }
+
+    function renderCart() {
+      const box = document.getElementById("cartItems");
+
+      if (!cart.length) {
+        box.innerHTML = '<div class="empty">Carrinho vazio.</div>';
+      } else {
+        box.innerHTML = `
+          <table>
+            <thead>
+              <tr>
+                <th>Produto</th>
+                <th>Qtd</th>
+                <th>Total</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              ${cart.map(i => `
+                <tr>
+                  <td>${escapeHtml(i.name)}<br><span class="muted">${money(i.price)}</span></td>
+                  <td><input style="width:70px" type="number" min="1" value="${i.qty}" onchange="changeQty('${i.productId}', this.value)" /></td>
+                  <td>${money(i.price * i.qty)}</td>
+                  <td><button class="danger" onclick="removeFromCart('${i.productId}')">X</button></td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        `;
+      }
+
+      const subtotal = cartSubtotal();
+      const discount = Number(document.getElementById("discount").value || 0);
+      const total = Math.max(0, subtotal - discount);
+      const paid = Number(document.getElementById("amountPaid").value || 0);
+      const change = Math.max(0, paid - total);
+
+      document.getElementById("subtotal").textContent = money(subtotal);
+      document.getElementById("total").textContent = money(total);
+      document.getElementById("change").textContent = money(change);
+    }
+
+    function finishSale() {
+      if (!cart.length) return alert("Adicione produtos ao carrinho.");
+
+      const subtotal = cartSubtotal();
+      const discount = Number(document.getElementById("discount").value || 0);
+      const total = Math.max(0, subtotal - discount);
+      const paymentMethod = document.getElementById("paymentMethod").value;
+      const amountPaid = Number(document.getElementById("amountPaid").value || 0);
+
+      if (paymentMethod === "Dinheiro" && amountPaid < total) {
+        return alert("Valor recebido menor que o total.");
+      }
+
+      const sale = {
+        id: uid(),
+        date: new Date().toISOString(),
+        items: JSON.parse(JSON.stringify(cart)),
+        subtotal,
+        discount,
+        total,
+        paymentMethod,
+        amountPaid,
+        change: Math.max(0, amountPaid - total)
+      };
+
+      for (const item of cart) {
+        const product = state.products.find(p => p.id === item.productId);
+        if (product) product.stock = Number(product.stock) - Number(item.qty);
+      }
+
+      state.sales.unshift(sale);
+      saveState();
+
+      document.getElementById("receipt").textContent = makeReceipt(sale);
+      clearCart();
+      renderAll();
+      alert("Venda finalizada com sucesso!");
+    }
+
+    function makeReceipt(sale) {
+      const date = new Date(sale.date).toLocaleString("pt-BR");
+      const lines = [];
+      lines.push("====== RECIBO DE VENDA ======");
+      lines.push("Data: " + date);
+      lines.push("Venda: " + sale.id);
+      lines.push("-----------------------------");
+      sale.items.forEach(i => {
+        lines.push(`${i.qty}x ${i.name}`);
+        lines.push(`   ${money(i.price)} cada = ${money(i.price * i.qty)}`);
+      });
+      lines.push("-----------------------------");
+      lines.push("Subtotal: " + money(sale.subtotal));
+      lines.push("Desconto: " + money(sale.discount));
+      lines.push("TOTAL: " + money(sale.total));
+      lines.push("Pagamento: " + sale.paymentMethod);
+      lines.push("Recebido: " + money(sale.amountPaid));
+      lines.push("Troco: " + money(sale.change));
+      lines.push("=============================");
+      lines.push("Obrigado pela preferência!");
+      return lines.join("\n");
+    }
+
+    function saveProduct() {
+      const id = document.getElementById("editingProductId").value;
+      const product = {
+        id: id || uid(),
+        code: document.getElementById("productCode").value.trim(),
+        name: document.getElementById("productName").value.trim(),
+        price: Number(document.getElementById("productPrice").value || 0),
+        stock: Number(document.getElementById("productStock").value || 0),
+        minStock: Number(document.getElementById("productMinStock").value || 0),
+        category: document.getElementById("productCategory").value.trim(),
+        description: document.getElementById("productDescription").value.trim()
+      };
+
+      if (!product.name) return alert("Informe o nome do produto.");
+      if (product.price < 0) return alert("Preço inválido.");
+
+      if (id) {
+        const index = state.products.findIndex(p => p.id === id);
+        state.products[index] = product;
+      } else {
+        state.products.push(product);
+      }
+
+      saveState();
+      clearProductForm();
+      renderAll();
+      alert("Produto salvo com sucesso!");
+    }
+
+    function editProduct(id) {
+      const p = state.products.find(product => product.id === id);
+      if (!p) return;
+
+      document.getElementById("editingProductId").value = p.id;
+      document.getElementById("productCode").value = p.code || "";
+      document.getElementById("productName").value = p.name || "";
+      document.getElementById("productPrice").value = p.price || 0;
+      document.getElementById("productStock").value = p.stock || 0;
+      document.getElementById("productMinStock").value = p.minStock || 0;
+      document.getElementById("productCategory").value = p.category || "";
+      document.getElementById("productDescription").value = p.description || "";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function deleteProduct(id) {
+      if (!confirm("Deseja excluir este produto?")) return;
+      state.products = state.products.filter(p => p.id !== id);
+      saveState();
+      renderAll();
+    }
+
+    function clearProductForm() {
+      document.getElementById("editingProductId").value = "";
+      document.getElementById("productCode").value = "";
+      document.getElementById("productName").value = "";
+      document.getElementById("productPrice").value = "";
+      document.getElementById("productStock").value = "";
+      document.getElementById("productMinStock").value = "3";
+      document.getElementById("productCategory").value = "";
+      document.getElementById("productDescription").value = "";
+    }
+
+    function renderProductsTable() {
+      const box = document.getElementById("productsTable");
+      const term = (document.getElementById("productListSearch").value || "").toLowerCase();
+
+      const products = state.products.filter(p => {
+        return [p.name, p.code, p.category, p.description].join(" ").toLowerCase().includes(term);
+      });
+
+      if (!products.length) {
+        box.innerHTML = '<div class="empty">Nenhum produto cadastrado.</div>';
+        return;
+      }
+
+      box.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Produto</th>
+              <th>Preço</th>
+              <th>Estoque</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${products.map(p => `
+              <tr>
+                <td>${escapeHtml(p.code || "-")}</td>
+                <td>
+                  <strong>${escapeHtml(p.name)}</strong><br>
+                  <span class="muted">${escapeHtml(p.category || "-")}</span>
+                </td>
+                <td>${money(p.price)}</td>
+                <td>
+                  <span class="badge ${Number(p.stock) <= Number(p.minStock || 0) ? "low-stock" : ""}">
+                    ${p.stock}
+                  </span>
+                </td>
+                <td>
+                  <button onclick="editProduct('${p.id}')">Editar</button>
+                  <button class="danger" onclick="deleteProduct('${p.id}')">Excluir</button>
+                </td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      `;
+    }
+
+    function renderSalesHistory() {
+      const box = document.getElementById("salesHistory");
+
+      if (!state.sales.length) {
+        box.innerHTML = '<div class="empty">Nenhuma venda registrada ainda.</div>';
+        return;
+      }
+
+      box.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Itens</th>
+              <th>Pagamento</th>
+              <th>Total</th>
+              <th>Recibo</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${state.sales.map(s => `
+              <tr>
+                <td>${new Date(s.date).toLocaleString("pt-BR")}</td>
+                <td>${s.items.reduce((sum, i) => sum + i.qty, 0)}</td>
+                <td>${escapeHtml(s.paymentMethod)}</td>
+                <td><strong>${money(s.total)}</strong></td>
+                <td><button onclick="showReceipt('${s.id}')">Ver</button></td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      `;
+    }
+
+    function showReceipt(id) {
+      const sale = state.sales.find(s => s.id === id);
+      if (!sale) return;
+      document.getElementById("receipt").textContent = makeReceipt(sale);
+      alert("Recibo carregado na aba Vendas.");
+    }
+
+    function renderReports() {
+      const box = document.getElementById("reports");
+      const totalSales = state.sales.reduce((sum, s) => sum + Number(s.total), 0);
+      const totalItems = state.sales.reduce((sum, s) => sum + s.items.reduce((a, i) => a + i.qty, 0), 0);
+      const lowStock = state.products.filter(p => Number(p.stock) <= Number(p.minStock || 0));
+
+      const byPayment = {};
+      state.sales.forEach(s => {
+        byPayment[s.paymentMethod] = (byPayment[s.paymentMethod] || 0) + Number(s.total);
+      });
+
+      box.innerHTML = `
+        <div class="form-grid">
+          <div class="card">
+            <h3>Total vendido</h3>
+            <div class="total-big">${money(totalSales)}</div>
+          </div>
+          <div class="card">
+            <h3>Vendas registradas</h3>
+            <div class="total-big">${state.sales.length}</div>
+          </div>
+          <div class="card">
+            <h3>Itens vendidos</h3>
+            <div class="total-big">${totalItems}</div>
+          </div>
+          <div class="card">
+            <h3>Produtos cadastrados</h3>
+            <div class="total-big">${state.products.length}</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Vendas por forma de pagamento</h3>
+          ${Object.keys(byPayment).length ? `
+            <table>
+              <tbody>
+                ${Object.entries(byPayment).map(([k, v]) => `
+                  <tr><td>${escapeHtml(k)}</td><td><strong>${money(v)}</strong></td></tr>
+                `).join("")}
+              </tbody>
+            </table>
+          ` : '<div class="empty">Nenhuma venda ainda.</div>'}
+        </div>
+
+        <div class="card">
+          <h3>Produtos com estoque baixo</h3>
+          ${lowStock.length ? `
+            <table>
+              <thead><tr><th>Produto</th><th>Estoque</th><th>Mínimo</th></tr></thead>
+              <tbody>
+                ${lowStock.map(p => `
+                  <tr><td>${escapeHtml(p.name)}</td><td>${p.stock}</td><td>${p.minStock}</td></tr>
+                `).join("")}
+              </tbody>
+            </table>
+          ` : '<div class="empty">Nenhum produto com estoque baixo.</div>'}
+        </div>
+      `;
+    }
+
+    function downloadBackup() {
+      const data = JSON.stringify(state, null, 2);
+      const blob = new Blob([data], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "backup-pdv.json";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function restoreBackup(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const imported = JSON.parse(e.target.result);
+          if (!imported.products || !imported.sales) throw new Error("Formato inválido.");
+          state = imported;
+          saveState();
+          cart = [];
+          renderAll();
+          alert("Backup restaurado com sucesso!");
+        } catch {
+          alert("Arquivo de backup inválido.");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function resetAllData() {
+      if (!confirm("Tem certeza? Isso apagará produtos e vendas deste navegador.")) return;
+      localStorage.removeItem(STORAGE_KEY);
+      state = defaultState();
+      cart = [];
+      renderAll();
+      alert("Dados apagados.");
+    }
+
+    function escapeHtml(text) {
+      return String(text ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    renderAll();
+  </script>
+</body>
+</html>
