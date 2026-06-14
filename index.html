@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PDV Simples com Área ADM</title>
+  <title>PDV com Produção - Netlify</title>
   <style>
     :root {
       --bg: #f3f4f6;
@@ -15,6 +15,7 @@
       --danger: #dc2626;
       --success: #16a34a;
       --warning: #d97706;
+      --purple: #7c3aed;
       --border: #e5e7eb;
       --shadow: 0 10px 25px rgba(0,0,0,.08);
       --radius: 16px;
@@ -50,9 +51,9 @@
 
     .tabs {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 8px;
-      max-width: 520px;
+      max-width: 720px;
       margin: 0 auto 16px;
     }
 
@@ -148,12 +149,9 @@
     button.danger { background: var(--danger); }
     button.success { background: var(--success); }
     button.warning { background: var(--warning); }
+    button.purple { background: var(--purple); }
     button.light { background: #e5e7eb; color: #111827; }
-
-    button:disabled {
-      opacity: .55;
-      cursor: not-allowed;
-    }
+    button:disabled { opacity: .55; cursor: not-allowed; }
 
     .actions {
       display: flex;
@@ -227,10 +225,11 @@
       color: #1e40af;
     }
 
-    .low-stock {
-      background: #fee2e2;
-      color: #991b1b;
-    }
+    .low-stock { background: #fee2e2; color: #991b1b; }
+    .status-recebido { background: #dbeafe; color: #1e40af; }
+    .status-producao { background: #fef3c7; color: #92400e; }
+    .status-pronto { background: #ede9fe; color: #5b21b6; }
+    .status-entregue { background: #dcfce7; color: #166534; }
 
     .empty {
       text-align: center;
@@ -259,9 +258,53 @@
       margin-bottom: 12px;
     }
 
+    .order-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 14px;
+    }
+
+    .order-card {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: white;
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .order-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .order-number {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .order-items {
+      background: #f9fafb;
+      border-radius: 12px;
+      padding: 10px;
+      margin: 10px 0;
+    }
+
+    .order-items div {
+      padding: 4px 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .order-items div:last-child {
+      border-bottom: 0;
+    }
+
     @media (max-width: 800px) {
       .grid, .form-grid { grid-template-columns: 1fr; }
-      .tabs, .admin-menu { grid-template-columns: repeat(2, 1fr); }
+      .tabs { grid-template-columns: 1fr; }
+      .admin-menu { grid-template-columns: repeat(2, 1fr); }
       table { font-size: 13px; }
       th, td { padding: 8px; }
       header h1 { font-size: 20px; }
@@ -284,12 +327,13 @@
 <body>
   <header>
     <h1>PDV Simples</h1>
-    <p>Tela de vendas separada da Área ADM — pronto para Netlify.</p>
+    <p>Com Tela de Vendas, Tela de Produção e Área ADM — pronto para Netlify.</p>
   </header>
 
   <main>
     <nav class="tabs">
       <button class="tab-btn active" onclick="showMainTab('vendas', this)">Tela de Vendas</button>
+      <button class="tab-btn" onclick="showMainTab('producao', this)">Produção</button>
       <button class="tab-btn" onclick="showMainTab('adm', this)">Área ADM</button>
     </nav>
 
@@ -309,6 +353,12 @@
             <div id="cartItems"></div>
 
             <div class="totals">
+              <label>Nome do cliente / mesa / retirada</label>
+              <input id="customerName" placeholder="Ex: Mesa 4, João, Retirada balcão" />
+
+              <label>Observações do pedido</label>
+              <textarea id="orderNotes" placeholder="Ex: Sem cebola, entregar na mesa 2..."></textarea>
+
               <div>Subtotal: <strong id="subtotal">R$ 0,00</strong></div>
               <label>Desconto</label>
               <input id="discount" type="number" min="0" step="0.01" value="0" oninput="renderCart()" />
@@ -345,10 +395,23 @@
       </div>
     </section>
 
+    <section id="producao" class="section">
+      <div class="card">
+        <h2>Tela de Produção</h2>
+        <p class="muted">Pedidos finalizados aparecem aqui. A equipe pode atualizar o status até a entrega.</p>
+        <div class="actions">
+          <button onclick="filterProduction('ativos')">Pedidos ativos</button>
+          <button class="light" onclick="filterProduction('todos')">Todos</button>
+          <button class="success" onclick="filterProduction('entregue')">Entregues</button>
+        </div>
+      </div>
+      <div id="productionOrders" class="order-grid"></div>
+    </section>
+
     <section id="adm" class="section">
       <div class="card">
         <h2>Área Administrativa</h2>
-        <p class="muted">Aqui ficam as telas de gestão. A tela de venda permanece separada para facilitar o uso no caixa.</p>
+        <p class="muted">Aqui ficam as telas de gestão. A tela de venda e a produção permanecem separadas.</p>
         <div class="admin-menu">
           <button onclick="showAdminPanel('produtosAdm')">Produtos</button>
           <button onclick="showAdminPanel('historicoAdm')">Histórico</button>
@@ -438,9 +501,10 @@
   </main>
 
   <script>
-    const STORAGE_KEY = "pdv_simples_netlify_v2_adm";
+    const STORAGE_KEY = "pdv_simples_netlify_v3_producao";
     let state = loadState();
     let cart = [];
+    let productionFilter = "ativos";
 
     function money(value) {
       return Number(value || 0).toLocaleString("pt-BR", {
@@ -451,6 +515,11 @@
 
     function uid() {
       return Date.now().toString(36) + Math.random().toString(36).slice(2);
+    }
+
+    function orderNumber() {
+      const n = (state.sales?.length || 0) + 1;
+      return String(n).padStart(4, "0");
     }
 
     function defaultState() {
@@ -471,12 +540,24 @@
       };
     }
 
+    function normalizeState(data) {
+      if (!data.products) data.products = [];
+      if (!data.sales) data.sales = [];
+      data.sales.forEach((sale, index) => {
+        if (!sale.status) sale.status = "Recebido";
+        if (!sale.orderNumber) sale.orderNumber = String(data.sales.length - index).padStart(4, "0");
+        if (!sale.customerName) sale.customerName = "";
+        if (!sale.orderNotes) sale.orderNotes = "";
+      });
+      return data;
+    }
+
     function loadState() {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (!saved) return defaultState();
 
       try {
-        return JSON.parse(saved);
+        return normalizeState(JSON.parse(saved));
       } catch {
         return defaultState();
       }
@@ -506,6 +587,7 @@
       renderProductsTable();
       renderSalesHistory();
       renderReports();
+      renderProductionOrders();
     }
 
     function renderSaleProducts() {
@@ -586,6 +668,8 @@
       cart = [];
       document.getElementById("discount").value = 0;
       document.getElementById("amountPaid").value = 0;
+      document.getElementById("customerName").value = "";
+      document.getElementById("orderNotes").value = "";
       renderCart();
     }
 
@@ -642,6 +726,8 @@
       const total = Math.max(0, subtotal - discount);
       const paymentMethod = document.getElementById("paymentMethod").value;
       const amountPaid = Number(document.getElementById("amountPaid").value || 0);
+      const customerName = document.getElementById("customerName").value.trim();
+      const orderNotes = document.getElementById("orderNotes").value.trim();
 
       if (paymentMethod === "Dinheiro" && amountPaid < total) {
         return alert("Valor recebido menor que o total.");
@@ -649,7 +735,12 @@
 
       const sale = {
         id: uid(),
+        orderNumber: orderNumber(),
         date: new Date().toISOString(),
+        customerName,
+        orderNotes,
+        status: "Recebido",
+        statusUpdatedAt: new Date().toISOString(),
         items: JSON.parse(JSON.stringify(cart)),
         subtotal,
         discount,
@@ -670,15 +761,17 @@
       document.getElementById("receipt").textContent = makeReceipt(sale);
       clearCart();
       renderAll();
-      alert("Venda finalizada com sucesso!");
+      alert("Venda finalizada! O pedido foi enviado para a Tela de Produção.");
     }
 
     function makeReceipt(sale) {
       const date = new Date(sale.date).toLocaleString("pt-BR");
       const lines = [];
       lines.push("====== RECIBO DE VENDA ======");
+      lines.push("Pedido: #" + sale.orderNumber);
       lines.push("Data: " + date);
-      lines.push("Venda: " + sale.id);
+      if (sale.customerName) lines.push("Cliente/Mesa: " + sale.customerName);
+      if (sale.orderNotes) lines.push("Obs: " + sale.orderNotes);
       lines.push("-----------------------------");
       sale.items.forEach(i => {
         lines.push(`${i.qty}x ${i.name}`);
@@ -691,9 +784,79 @@
       lines.push("Pagamento: " + sale.paymentMethod);
       lines.push("Recebido: " + money(sale.amountPaid));
       lines.push("Troco: " + money(sale.change));
+      lines.push("Status: " + sale.status);
       lines.push("=============================");
       lines.push("Obrigado pela preferência!");
       return lines.join("\\n");
+    }
+
+    function filterProduction(type) {
+      productionFilter = type;
+      renderProductionOrders();
+    }
+
+    function statusClass(status) {
+      if (status === "Em produção") return "status-producao";
+      if (status === "Pronto") return "status-pronto";
+      if (status === "Entregue") return "status-entregue";
+      return "status-recebido";
+    }
+
+    function updateOrderStatus(id, status) {
+      const sale = state.sales.find(s => s.id === id);
+      if (!sale) return;
+      sale.status = status;
+      sale.statusUpdatedAt = new Date().toISOString();
+      saveState();
+      renderAll();
+    }
+
+    function renderProductionOrders() {
+      const box = document.getElementById("productionOrders");
+      if (!box) return;
+
+      let orders = [...state.sales];
+
+      if (productionFilter === "ativos") {
+        orders = orders.filter(s => s.status !== "Entregue");
+      }
+
+      if (productionFilter === "entregue") {
+        orders = orders.filter(s => s.status === "Entregue");
+      }
+
+      if (!orders.length) {
+        box.innerHTML = '<div class="empty">Nenhum pedido nesta lista.</div>';
+        return;
+      }
+
+      box.innerHTML = orders.map(s => `
+        <div class="order-card">
+          <div class="order-header">
+            <div>
+              <div class="order-number">Pedido #${escapeHtml(s.orderNumber)}</div>
+              <div class="muted">${new Date(s.date).toLocaleString("pt-BR")}</div>
+              ${s.customerName ? `<div><strong>Cliente/Mesa:</strong> ${escapeHtml(s.customerName)}</div>` : ""}
+            </div>
+            <span class="badge ${statusClass(s.status)}">${escapeHtml(s.status)}</span>
+          </div>
+
+          <div class="order-items">
+            ${s.items.map(i => `<div><strong>${i.qty}x</strong> ${escapeHtml(i.name)}</div>`).join("")}
+          </div>
+
+          ${s.orderNotes ? `<div class="notice"><strong>Obs:</strong> ${escapeHtml(s.orderNotes)}</div>` : ""}
+
+          <div class="muted">Total: <strong>${money(s.total)}</strong></div>
+
+          <div class="actions">
+            <button onclick="updateOrderStatus('${s.id}', 'Recebido')">Recebido</button>
+            <button class="warning" onclick="updateOrderStatus('${s.id}', 'Em produção')">Em produção</button>
+            <button class="purple" onclick="updateOrderStatus('${s.id}', 'Pronto')">Pronto</button>
+            <button class="success" onclick="updateOrderStatus('${s.id}', 'Entregue')">Entregue</button>
+          </div>
+        </div>
+      `).join("");
     }
 
     function saveProduct() {
@@ -729,7 +892,7 @@
       const p = state.products.find(product => product.id === id);
       if (!p) return;
 
-      showMainTab("adm", document.querySelectorAll(".tab-btn")[1]);
+      showMainTab("adm", document.querySelectorAll(".tab-btn")[2]);
       showAdminPanel("produtosAdm");
 
       document.getElementById("editingProductId").value = p.id;
@@ -823,7 +986,9 @@
         <table>
           <thead>
             <tr>
+              <th>Pedido</th>
               <th>Data</th>
+              <th>Status</th>
               <th>Itens</th>
               <th>Pagamento</th>
               <th>Total</th>
@@ -833,7 +998,9 @@
           <tbody>
             ${state.sales.map(s => `
               <tr>
+                <td>#${escapeHtml(s.orderNumber)}</td>
                 <td>${new Date(s.date).toLocaleString("pt-BR")}</td>
+                <td><span class="badge ${statusClass(s.status)}">${escapeHtml(s.status)}</span></td>
                 <td>${s.items.reduce((sum, i) => sum + i.qty, 0)}</td>
                 <td>${escapeHtml(s.paymentMethod)}</td>
                 <td><strong>${money(s.total)}</strong></td>
@@ -858,6 +1025,7 @@
       const totalSales = state.sales.reduce((sum, s) => sum + Number(s.total), 0);
       const totalItems = state.sales.reduce((sum, s) => sum + s.items.reduce((a, i) => a + i.qty, 0), 0);
       const lowStock = state.products.filter(p => Number(p.stock) <= Number(p.minStock || 0));
+      const activeOrders = state.sales.filter(s => s.status !== "Entregue").length;
 
       const byPayment = {};
       state.sales.forEach(s => {
@@ -875,12 +1043,12 @@
             <div class="total-big">${state.sales.length}</div>
           </div>
           <div class="card">
-            <h3>Itens vendidos</h3>
-            <div class="total-big">${totalItems}</div>
+            <h3>Pedidos ativos</h3>
+            <div class="total-big">${activeOrders}</div>
           </div>
           <div class="card">
-            <h3>Produtos cadastrados</h3>
-            <div class="total-big">${state.products.length}</div>
+            <h3>Itens vendidos</h3>
+            <div class="total-big">${totalItems}</div>
           </div>
         </div>
 
@@ -931,7 +1099,7 @@
       const reader = new FileReader();
       reader.onload = function(e) {
         try {
-          const imported = JSON.parse(e.target.result);
+          const imported = normalizeState(JSON.parse(e.target.result));
           if (!imported.products || !imported.sales) throw new Error("Formato inválido.");
           state = imported;
           saveState();
@@ -946,7 +1114,7 @@
     }
 
     function resetAllData() {
-      if (!confirm("Tem certeza? Isso apagará produtos e vendas deste navegador.")) return;
+      if (!confirm("Tem certeza? Isso apagará produtos, vendas e pedidos deste navegador.")) return;
       localStorage.removeItem(STORAGE_KEY);
       state = defaultState();
       cart = [];
