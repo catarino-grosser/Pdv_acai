@@ -31,7 +31,14 @@
 </main>
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";import{getFirestore,collection,doc,addDoc,setDoc,updateDoc,deleteDoc,onSnapshot,serverTimestamp,query,orderBy,runTransaction}from"https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
-const firebaseConfig={apiKey:"COLE_AQUI",authDomain:"COLE_AQUI",projectId:"COLE_AQUI",storageBucket:"COLE_AQUI",messagingSenderId:"COLE_AQUI",appId:"COLE_AQUI"};
+ firebaseConfig = {
+  apiKey: "AIzaSyDfMCZH0Kv57EN7HxYafvW2eXtkpB4TF_U",
+  authDomain: "acai-do-catarino.firebaseapp.com",
+  projectId: "acai-do-catarino",
+  storageBucket: "acai-do-catarino.firebasestorage.app",
+  messagingSenderId: "624038766521",
+  appId: "1:624038766521:web:43c2278569ca6fd13a7868"
+};
 const configured=firebaseConfig.apiKey!=="COLE_AQUI"&&firebaseConfig.projectId!=="COLE_AQUI";let db=null,products=[],sales=[],cart=[],productionFilter="ativos";const fallbackKey="acai_do_catarino_local_fallback";
 if(!configured){document.getElementById("firebaseWarning").style.display="block";const local=loadLocal();products=local.products;sales=local.sales;renderAll()}else{const app=initializeApp(firebaseConfig);db=getFirestore(app);startSync()}
 function loadLocal(){try{return JSON.parse(localStorage.getItem(fallbackKey))||demo()}catch{return demo()}}function demo(){return{products:[{id:"demo-acai-300",code:"001",name:"Açaí 300ml",price:12,stock:100,minStock:5,category:"Açaí",description:"Produto de exemplo."}],sales:[]}}function saveLocal(){localStorage.setItem(fallbackKey,JSON.stringify({products,sales}))}
