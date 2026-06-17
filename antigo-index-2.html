@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Açaí do Catarino - PDV Firebase</title>
 <style>
-:root{--bg:#f6f2ff;--card:#fff;--text:#1f1235;--muted:#6b5d7d;--primary:#6d28d9;--danger:#dc2626;--success:#16a34a;--warning:#d97706;--border:#e9d5ff;--shadow:0 10px 25px rgba(46,16,101,.12);--radius:18px}*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}header{background:linear-gradient(135deg,#4c1d95,#7c3aed,#a855f7);color:#fff;padding:18px;position:sticky;top:0;z-index:10;box-shadow:var(--shadow)}header h1{margin:0;font-size:23px}header p{margin:6px 0 0;opacity:.92;font-size:14px}main{width:min(1200px,100%);margin:0 auto;padding:16px}.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:760px;margin:0 auto 16px}.tab-btn{border:0;padding:13px 8px;border-radius:14px;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.05);cursor:pointer;font-weight:bold;color:var(--text)}.tab-btn.active{background:var(--primary);color:#fff}.hidden{display:none!important}.section,.admin-panel{display:none}.section.active,.admin-panel.active{display:block}.admin-menu{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);margin-bottom:16px}h2,h3{margin-top:0}label{font-size:13px;font-weight:bold;color:var(--muted);display:block;margin-bottom:6px}input,select,textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:12px;font-size:16px;background:#fff}textarea{min-height:80px;resize:vertical}.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.full{grid-column:1/-1}button{border:0;border-radius:12px;padding:12px 14px;font-size:15px;font-weight:bold;cursor:pointer;background:var(--primary);color:#fff}button.danger{background:var(--danger)}button.success{background:var(--success)}button.warning{background:var(--warning)}button.light{background:#e5e7eb;color:#111827}button:disabled{opacity:.55;cursor:not-allowed}.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.products-grid,.order-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}.product-card,.order-card{border:1px solid var(--border);border-radius:16px;padding:12px;background:#fbf7ff;box-shadow:var(--shadow)}.product-card h4{margin:0 0 6px;font-size:16px}.muted{color:var(--muted);font-size:13px}.price{font-size:20px;font-weight:bold;color:var(--success);margin:8px 0}table{width:100%;border-collapse:collapse;border-radius:12px;background:#fff}th,td{border-bottom:1px solid var(--border);padding:10px;text-align:left;font-size:14px}th{background:#faf5ff;color:var(--muted)}.totals{display:grid;gap:8px;font-size:16px}.total-big{font-size:30px;font-weight:bold;color:var(--success)}.badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:bold;background:#ede9fe;color:#5b21b6}.low-stock{background:#fee2e2;color:#991b1b}.status-recebido{background:#dbeafe;color:#1e40af}.status-producao{background:#fef3c7;color:#92400e}.status-pronto{background:#ede9fe;color:#5b21b6}.status-entregue{background:#dcfce7;color:#166534}.empty{text-align:center;color:var(--muted);padding:24px;border:1px dashed var(--border);border-radius:14px;background:#fbf7ff}.receipt{font-family:monospace;white-space:pre-wrap;background:#fff;border:1px dashed #999;padding:14px;border-radius:12px;overflow:auto}.notice{padding:12px;border-radius:12px;background:#f5f3ff;border:1px solid #ddd6fe;color:#4c1d95;margin-bottom:12px}.danger-notice{background:#fef2f2;border-color:#fecaca;color:#991b1b}.customer-notice{background:#ecfdf5;border-color:#bbf7d0;color:#166534}.order-header{display:flex;justify-content:space-between;gap:8px;align-items:flex-start;margin-bottom:10px}.order-number{font-size:22px;font-weight:bold}.order-items{background:#faf5ff;border-radius:12px;padding:10px;margin:10px 0}.order-items div{padding:4px 0;border-bottom:1px solid #e9d5ff}.order-items div:last-child{border-bottom:0}.offline{background:#fef2f2;color:#991b1b;border:1px solid #fecaca;padding:10px;border-radius:12px;margin-top:12px;display:none}.admin-only{display:block}.customer-title{display:none}.team-access{text-align:center;margin:18px 0 8px}.team-access button{background:transparent;color:var(--muted);text-decoration:underline;box-shadow:none;padding:8px;font-size:13px}.confirm-overlay{position:fixed;inset:0;background:rgba(31,18,53,.55);display:flex;align-items:center;justify-content:center;padding:18px;z-index:999}.confirm-box{background:#fff;border-radius:24px;padding:24px;width:min(420px,100%);box-shadow:0 20px 60px rgba(0,0,0,.25);text-align:center}.confirm-icon{font-size:44px;margin-bottom:10px}.confirm-number{font-size:34px;font-weight:bold;color:var(--primary);margin:12px 0}.confirm-box p{color:var(--muted);font-size:16px}.product-card{text-align:left}.product-card .price{font-size:26px}.product-card .actions button{font-size:16px;padding:13px 18px}.btn-added{background:var(--success)!important}.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#166534;color:#fff;padding:14px 18px;border-radius:999px;box-shadow:0 12px 35px rgba(0,0,0,.25);font-weight:bold;z-index:1001;max-width:90%;text-align:center}.loading-overlay{position:fixed;inset:0;background:rgba(31,18,53,.62);display:flex;align-items:center;justify-content:center;padding:18px;z-index:1000}.loading-box{background:#fff;border-radius:24px;padding:28px;width:min(360px,100%);box-shadow:0 20px 60px rgba(0,0,0,.25);text-align:center}.spinner{width:46px;height:46px;border:5px solid #e9d5ff;border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}@keyframes spin{to{transform:rotate(360deg)}}.loading-box h2{margin-bottom:8px}.loading-box p{color:var(--muted);margin:0}
+:root{--bg:#f6f2ff;--card:#fff;--text:#1f1235;--muted:#6b5d7d;--primary:#6d28d9;--danger:#dc2626;--success:#16a34a;--warning:#d97706;--border:#e9d5ff;--shadow:0 10px 25px rgba(46,16,101,.12);--radius:18px}*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}header{background:linear-gradient(135deg,#4c1d95,#7c3aed,#a855f7);color:#fff;padding:18px;position:sticky;top:0;z-index:10;box-shadow:var(--shadow)}header h1{margin:0;font-size:23px}header p{margin:6px 0 0;opacity:.92;font-size:14px}main{width:min(1200px,100%);margin:0 auto;padding:16px}.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:760px;margin:0 auto 16px}.tab-btn{border:0;padding:13px 8px;border-radius:14px;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.05);cursor:pointer;font-weight:bold;color:var(--text)}.tab-btn.active{background:var(--primary);color:#fff}.hidden{display:none!important}.section,.admin-panel{display:none}.section.active,.admin-panel.active{display:block}.admin-menu{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);margin-bottom:16px}h2,h3{margin-top:0}label{font-size:13px;font-weight:bold;color:var(--muted);display:block;margin-bottom:6px}input,select,textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:12px;font-size:16px;background:#fff}textarea{min-height:80px;resize:vertical}.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.full{grid-column:1/-1}button{border:0;border-radius:12px;padding:12px 14px;font-size:15px;font-weight:bold;cursor:pointer;background:var(--primary);color:#fff}button.danger{background:var(--danger)}button.success{background:var(--success)}button.warning{background:var(--warning)}button.light{background:#e5e7eb;color:#111827}button:disabled{opacity:.55;cursor:not-allowed}.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.products-grid,.order-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}.product-card,.order-card{border:1px solid var(--border);border-radius:16px;padding:12px;background:#fbf7ff;box-shadow:var(--shadow)}.product-card h4{margin:0 0 6px;font-size:16px}.muted{color:var(--muted);font-size:13px}.price{font-size:20px;font-weight:bold;color:var(--success);margin:8px 0}table{width:100%;border-collapse:collapse;border-radius:12px;background:#fff}th,td{border-bottom:1px solid var(--border);padding:10px;text-align:left;font-size:14px}th{background:#faf5ff;color:var(--muted)}.totals{display:grid;gap:8px;font-size:16px}.total-big{font-size:30px;font-weight:bold;color:var(--success)}.badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:bold;background:#ede9fe;color:#5b21b6}.low-stock{background:#fee2e2;color:#991b1b}.status-recebido{background:#dbeafe;color:#1e40af}.status-producao{background:#fef3c7;color:#92400e}.status-pronto{background:#ede9fe;color:#5b21b6}.status-entregue{background:#dcfce7;color:#166534}.empty{text-align:center;color:var(--muted);padding:24px;border:1px dashed var(--border);border-radius:14px;background:#fbf7ff}.receipt{font-family:monospace;white-space:pre-wrap;background:#fff;border:1px dashed #999;padding:14px;border-radius:12px;overflow:auto}.notice{padding:12px;border-radius:12px;background:#f5f3ff;border:1px solid #ddd6fe;color:#4c1d95;margin-bottom:12px}.danger-notice{background:#fef2f2;border-color:#fecaca;color:#991b1b}.customer-notice{background:#ecfdf5;border-color:#bbf7d0;color:#166534}.order-header{display:flex;justify-content:space-between;gap:8px;align-items:flex-start;margin-bottom:10px}.order-number{font-size:22px;font-weight:bold}.order-items{background:#faf5ff;border-radius:12px;padding:10px;margin:10px 0}.order-items div{padding:4px 0;border-bottom:1px solid #e9d5ff}.order-items div:last-child{border-bottom:0}.offline{background:#fef2f2;color:#991b1b;border:1px solid #fecaca;padding:10px;border-radius:12px;margin-top:12px;display:none}.admin-only{display:block}.customer-title{display:none}.team-access{text-align:center;margin:18px 0 8px}.team-access button{background:transparent;color:var(--muted);text-decoration:underline;box-shadow:none;padding:8px;font-size:13px}.confirm-overlay{position:fixed;inset:0;background:rgba(31,18,53,.55);display:flex;align-items:center;justify-content:center;padding:18px;z-index:999}.confirm-box{background:#fff;border-radius:24px;padding:24px;width:min(420px,100%);box-shadow:0 20px 60px rgba(0,0,0,.25);text-align:center}.confirm-icon{font-size:44px;margin-bottom:10px}.confirm-number{font-size:34px;font-weight:bold;color:var(--primary);margin:12px 0}.confirm-box p{color:var(--muted);font-size:16px}.product-card{text-align:left}.product-card .price{font-size:26px}.product-card .actions button{font-size:16px;padding:13px 18px}
 @media(max-width:800px){.grid,.form-grid{grid-template-columns:1fr}.tabs{grid-template-columns:1fr}.admin-menu{grid-template-columns:repeat(2,1fr)}th,td{padding:8px}header h1{font-size:20px}}
 @media print{body *{visibility:hidden}#printArea,#printArea *{visibility:visible}#printArea{position:absolute;left:0;top:0;width:100%}header,.tabs,.admin-menu,button,input,select,textarea{display:none!important}.card{box-shadow:none;border:0}}
 </style>
@@ -192,16 +192,6 @@
     </div>
   </div>
 </div>
-
-<div id="sendingOverlay" class="loading-overlay hidden">
-  <div class="loading-box">
-    <div class="spinner"></div>
-    <h2>Enviando pedido...</h2>
-    <p>Aguarde um instante. Não feche esta tela.</p>
-  </div>
-</div>
-
-<div id="toast" class="toast hidden">Produto adicionado com sucesso.</div>
 </main>
 
 <script type="module">
@@ -213,7 +203,7 @@ const firebaseConfig={apiKey:"AIzaSyDfMCZH0Kv57EN7HxYafvW2eXtkpB4TF_U",authDomai
 
 const ADMIN_EMAILS=["catarinogrosserferreira@gmail.com"];
 const configured=firebaseConfig.apiKey!=="COLE_AQUI"&&firebaseConfig.projectId!=="COLE_AQUI";
-let db=null,auth=null,products=[],sales=[],cart=[],productionFilter="ativos",currentUser=null,currentRole="cliente",sendingOrder=false;
+let db=null,auth=null,products=[],sales=[],cart=[],productionFilter="ativos",currentUser=null,currentRole="cliente";
 const fallbackKey="acai_do_catarino_local_fallback";
 
 if(!configured){
@@ -288,7 +278,7 @@ window.renderSaleProducts=()=>{
       ${p.description?`<div class="muted">${esc(p.description)}</div>`:""}
       <div class="price">${money(p.price)}</div>
       ${isAdmin?`<div class="badge ${Number(p.stock)<=Number(p.minStock||0)?"low-stock":""}">Estoque: ${p.stock??0}</div>`:""}
-      <div class="actions"><button id="addBtn_${p.id}" ${Number(p.stock||0)<=0?"disabled":""} onclick="addToCart('${p.id}')">${Number(p.stock||0)<=0?"Indisponível":"Adicionar"}</button></div>
+      <div class="actions"><button ${Number(p.stock||0)<=0?"disabled":""} onclick="addToCart('${p.id}')">${Number(p.stock||0)<=0?"Indisponível":"Adicionar"}</button></div>
     </div>`).join(""):'<div class="empty">Nenhum produto encontrado.</div>'
 };
 
@@ -300,9 +290,6 @@ window.addToCart=id=>{
     if(item.qty+1>Number(p.stock||0))return alert("Quantidade maior que o disponível.");
     item.qty++
   }else cart.push({productId:p.id,code:p.code||"",name:p.name,price:Number(p.price||0),qty:1});
-
-  showToast("✓ "+p.name+" adicionado ao carrinho");
-  flashAddButton(id);
   renderCart()
 };
 
@@ -343,19 +330,17 @@ window.renderCart=()=>{
 };
 
 window.finishSale=async()=>{
-  if(sendingOrder)return;
   if(!cart.length)return alert("Adicione produtos ao carrinho.");
   if(!customerName.value.trim())return alert("Informe seu nome ou número da mesa.");
 
   const isAdmin=canAdmin();
-  setSendingState(true,isAdmin);
   const sub=subtotal();
   const disc=isAdmin?Number(discount.value||0):0;
   const tot=Math.max(0,sub-disc);
   const pay=isAdmin?paymentMethod.value:"Pagar no balcão";
   const paid=isAdmin?Number(amountPaid.value||0):0;
 
-  if(isAdmin&&pay==="Dinheiro"&&paid<tot){setSendingState(false,isAdmin);return alert("Valor recebido menor que o total.");}
+  if(isAdmin&&pay==="Dinheiro"&&paid<tot)return alert("Valor recebido menor que o total.");
 
   const sale={
     orderNumber:orderNumber(),
@@ -411,7 +396,6 @@ window.finishSale=async()=>{
     receipt.textContent=makeReceipt(sale);
     const sentOrderNumber=sale.orderNumber;
     clearCart();
-    setSendingState(false,isAdmin);
     renderAll();
 
     if(isAdmin){
@@ -419,10 +403,7 @@ window.finishSale=async()=>{
     }else{
       showOrderConfirm(sentOrderNumber);
     }
-  }catch(e){
-    setSendingState(false,canAdmin());
-    alert("Erro ao enviar pedido: "+e.message)
-  }
+  }catch(e){alert("Erro ao enviar pedido: "+e.message)}
 };
 
 function makeReceipt(s){
@@ -510,34 +491,6 @@ function renderReports(){
   reports.innerHTML=`<div class="form-grid"><div class="card"><h3>Total vendido</h3><div class="total-big">${money(totalSales)}</div></div><div class="card"><h3>Vendas registradas</h3><div class="total-big">${sales.length}</div></div><div class="card"><h3>Pedidos ativos</h3><div class="total-big">${active}</div></div><div class="card"><h3>Itens vendidos</h3><div class="total-big">${totalItems}</div></div></div><div class="card"><h3>Vendas por forma de pagamento</h3>${Object.keys(by).length?`<table><tbody>${Object.entries(by).map(([k,v])=>`<tr><td>${esc(k)}</td><td><strong>${money(v)}</strong></td></tr>`).join("")}</tbody></table>`:'<div class="empty">Nenhuma venda ainda.</div>'}</div><div class="card"><h3>Produtos com estoque baixo</h3>${low.length?`<table><thead><tr><th>Produto</th><th>Estoque</th><th>Mínimo</th></tr></thead><tbody>${low.map(p=>`<tr><td>${esc(p.name)}</td><td>${p.stock}</td><td>${p.minStock}</td></tr>`).join("")}</tbody></table>`:'<div class="empty">Nenhum produto com estoque baixo.</div>'}</div>`
 }
 
-function showToast(message){
-  toast.textContent=message;
-  toast.classList.remove("hidden");
-  clearTimeout(window.toastTimer);
-  window.toastTimer=setTimeout(()=>toast.classList.add("hidden"),1400);
-}
-
-function flashAddButton(id){
-  const btn=document.getElementById("addBtn_"+id);
-  if(!btn)return;
-  const oldText=btn.textContent;
-  btn.textContent="✓ Adicionado";
-  btn.classList.add("btn-added");
-  btn.disabled=true;
-  setTimeout(()=>{
-    btn.textContent=oldText;
-    btn.classList.remove("btn-added");
-    btn.disabled=false;
-  },900);
-}
-
-function setSendingState(active,isAdmin){
-  sendingOrder=active;
-  finishSaleBtn.disabled=active;
-  finishSaleBtn.textContent=active?"⏳ Enviando pedido...":(isAdmin?"Finalizar venda":"Enviar pedido");
-  sendingOverlay.classList.toggle("hidden",!active);
-}
-
 function showOrderConfirm(orderNumber){
   confirmOrderNumber.textContent="#"+(orderNumber||"------");
   orderConfirm.classList.remove("hidden");
@@ -561,7 +514,7 @@ function applyAccess(){
   userInfo.textContent=isAdmin?"Administrador: "+currentUser.email:"Cliente";
   vendasTab.textContent=isAdmin?"Tela de Vendas":"Fazer Pedido";
   saleTitle.textContent=isAdmin?"Nova venda":"Faça seu pedido";
-  if(!sendingOrder)finishSaleBtn.textContent=isAdmin?"Finalizar venda":"Enviar pedido";
+  finishSaleBtn.textContent=isAdmin?"Finalizar venda":"Enviar pedido";
   headerSubtitle.textContent=isAdmin?"PDV com Firebase Firestore: produtos, vendas e produção em tempo real.":"Faça seu pedido pelo celular. Depois é só aguardar no balcão.";
   customerHelp.classList.toggle("hidden",isAdmin);
 
