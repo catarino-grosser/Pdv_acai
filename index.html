@@ -5,128 +5,559 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Açaí do Catarino - PDV Firebase</title>
 <style>
-:root{--bg:#f6f2ff;--card:#fff;--text:#1f1235;--muted:#6b5d7d;--primary:#6d28d9;--danger:#dc2626;--success:#16a34a;--warning:#d97706;--border:#e9d5ff;--shadow:0 10px 25px rgba(46,16,101,.12);--radius:18px}*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}header{background:linear-gradient(135deg,#4c1d95,#7c3aed,#a855f7);color:#fff;padding:18px;position:sticky;top:0;z-index:10;box-shadow:var(--shadow)}header h1{margin:0;font-size:23px}header p{margin:6px 0 0;opacity:.92;font-size:14px}main{width:min(1200px,100%);margin:0 auto;padding:16px}.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:760px;margin:0 auto 16px}.tab-btn{border:0;padding:13px 8px;border-radius:14px;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.05);cursor:pointer;font-weight:bold;color:var(--text)}.tab-btn.active{background:var(--primary);color:#fff}.hidden{display:none!important}.section,.admin-panel{display:none}.section.active,.admin-panel.active{display:block}.admin-menu{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);margin-bottom:16px}h2,h3{margin-top:0}label{font-size:13px;font-weight:bold;color:var(--muted);display:block;margin-bottom:6px}input,select,textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:12px;font-size:16px;background:#fff}textarea{min-height:80px;resize:vertical}.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.full{grid-column:1/-1}button{border:0;border-radius:12px;padding:12px 14px;font-size:15px;font-weight:bold;cursor:pointer;background:var(--primary);color:#fff}button.danger{background:var(--danger)}button.success{background:var(--success)}button.warning{background:var(--warning)}button.light{background:#e5e7eb;color:#111827}button:disabled{opacity:.55;cursor:not-allowed}.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.products-grid,.order-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}.product-card,.order-card{border:1px solid var(--border);border-radius:16px;padding:12px;background:#fbf7ff;box-shadow:var(--shadow)}.product-card h4{margin:0 0 6px;font-size:16px}.muted{color:var(--muted);font-size:13px}.price{font-size:20px;font-weight:bold;color:var(--success);margin:8px 0}table{width:100%;border-collapse:collapse;border-radius:12px;background:#fff}th,td{border-bottom:1px solid var(--border);padding:10px;text-align:left;font-size:14px}th{background:#faf5ff;color:var(--muted)}.totals{display:grid;gap:8px;font-size:16px}.total-big{font-size:30px;font-weight:bold;color:var(--success)}.badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:bold;background:#ede9fe;color:#5b21b6}.low-stock{background:#fee2e2;color:#991b1b}.status-recebido{background:#dbeafe;color:#1e40af}.status-producao{background:#fef3c7;color:#92400e}.status-pronto{background:#ede9fe;color:#5b21b6}.status-entregue{background:#dcfce7;color:#166534}.empty{text-align:center;color:var(--muted);padding:24px;border:1px dashed var(--border);border-radius:14px;background:#fbf7ff}.receipt{font-family:monospace;white-space:pre-wrap;background:#fff;border:1px dashed #999;padding:14px;border-radius:12px;overflow:auto}.notice{padding:12px;border-radius:12px;background:#f5f3ff;border:1px solid #ddd6fe;color:#4c1d95;margin-bottom:12px}.danger-notice{background:#fef2f2;border-color:#fecaca;color:#991b1b}.order-header{display:flex;justify-content:space-between;gap:8px;align-items:flex-start;margin-bottom:10px}.order-number{font-size:22px;font-weight:bold}.order-items{background:#faf5ff;border-radius:12px;padding:10px;margin:10px 0}.order-items div{padding:4px 0;border-bottom:1px solid #e9d5ff}.order-items div:last-child{border-bottom:0}.offline{background:#fef2f2;color:#991b1b;border:1px solid #fecaca;padding:10px;border-radius:12px;margin-top:12px;display:none}@media(max-width:800px){.grid,.form-grid{grid-template-columns:1fr}.tabs{grid-template-columns:1fr}.admin-menu{grid-template-columns:repeat(2,1fr)}th,td{padding:8px}header h1{font-size:20px}}
+:root{--bg:#f6f2ff;--card:#fff;--text:#1f1235;--muted:#6b5d7d;--primary:#6d28d9;--danger:#dc2626;--success:#16a34a;--warning:#d97706;--border:#e9d5ff;--shadow:0 10px 25px rgba(46,16,101,.12);--radius:18px}*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}header{background:linear-gradient(135deg,#4c1d95,#7c3aed,#a855f7);color:#fff;padding:18px;position:sticky;top:0;z-index:10;box-shadow:var(--shadow)}header h1{margin:0;font-size:23px}header p{margin:6px 0 0;opacity:.92;font-size:14px}main{width:min(1200px,100%);margin:0 auto;padding:16px}.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:760px;margin:0 auto 16px}.tab-btn{border:0;padding:13px 8px;border-radius:14px;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.05);cursor:pointer;font-weight:bold;color:var(--text)}.tab-btn.active{background:var(--primary);color:#fff}.hidden{display:none!important}.section,.admin-panel{display:none}.section.active,.admin-panel.active{display:block}.admin-menu{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);margin-bottom:16px}h2,h3{margin-top:0}label{font-size:13px;font-weight:bold;color:var(--muted);display:block;margin-bottom:6px}input,select,textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:12px;font-size:16px;background:#fff}textarea{min-height:80px;resize:vertical}.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.full{grid-column:1/-1}button{border:0;border-radius:12px;padding:12px 14px;font-size:15px;font-weight:bold;cursor:pointer;background:var(--primary);color:#fff}button.danger{background:var(--danger)}button.success{background:var(--success)}button.warning{background:var(--warning)}button.light{background:#e5e7eb;color:#111827}button:disabled{opacity:.55;cursor:not-allowed}.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.products-grid,.order-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}.product-card,.order-card{border:1px solid var(--border);border-radius:16px;padding:12px;background:#fbf7ff;box-shadow:var(--shadow)}.product-card h4{margin:0 0 6px;font-size:16px}.muted{color:var(--muted);font-size:13px}.price{font-size:20px;font-weight:bold;color:var(--success);margin:8px 0}table{width:100%;border-collapse:collapse;border-radius:12px;background:#fff}th,td{border-bottom:1px solid var(--border);padding:10px;text-align:left;font-size:14px}th{background:#faf5ff;color:var(--muted)}.totals{display:grid;gap:8px;font-size:16px}.total-big{font-size:30px;font-weight:bold;color:var(--success)}.badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:bold;background:#ede9fe;color:#5b21b6}.low-stock{background:#fee2e2;color:#991b1b}.status-recebido{background:#dbeafe;color:#1e40af}.status-producao{background:#fef3c7;color:#92400e}.status-pronto{background:#ede9fe;color:#5b21b6}.status-entregue{background:#dcfce7;color:#166534}.empty{text-align:center;color:var(--muted);padding:24px;border:1px dashed var(--border);border-radius:14px;background:#fbf7ff}.receipt{font-family:monospace;white-space:pre-wrap;background:#fff;border:1px dashed #999;padding:14px;border-radius:12px;overflow:auto}.notice{padding:12px;border-radius:12px;background:#f5f3ff;border:1px solid #ddd6fe;color:#4c1d95;margin-bottom:12px}.danger-notice{background:#fef2f2;border-color:#fecaca;color:#991b1b}.customer-notice{background:#ecfdf5;border-color:#bbf7d0;color:#166534}.order-header{display:flex;justify-content:space-between;gap:8px;align-items:flex-start;margin-bottom:10px}.order-number{font-size:22px;font-weight:bold}.order-items{background:#faf5ff;border-radius:12px;padding:10px;margin:10px 0}.order-items div{padding:4px 0;border-bottom:1px solid #e9d5ff}.order-items div:last-child{border-bottom:0}.offline{background:#fef2f2;color:#991b1b;border:1px solid #fecaca;padding:10px;border-radius:12px;margin-top:12px;display:none}.admin-only{display:block}.customer-title{display:none}.team-access{text-align:center;margin:18px 0 8px}.team-access button{background:transparent;color:var(--muted);text-decoration:underline;box-shadow:none;padding:8px;font-size:13px}.confirm-overlay{position:fixed;inset:0;background:rgba(31,18,53,.55);display:flex;align-items:center;justify-content:center;padding:18px;z-index:999}.confirm-box{background:#fff;border-radius:24px;padding:24px;width:min(420px,100%);box-shadow:0 20px 60px rgba(0,0,0,.25);text-align:center}.confirm-icon{font-size:44px;margin-bottom:10px}.confirm-number{font-size:34px;font-weight:bold;color:var(--primary);margin:12px 0}.confirm-box p{color:var(--muted);font-size:16px}.product-card{text-align:left}.product-card .price{font-size:26px}.product-card .actions button{font-size:16px;padding:13px 18px}
+@media(max-width:800px){.grid,.form-grid{grid-template-columns:1fr}.tabs{grid-template-columns:1fr}.admin-menu{grid-template-columns:repeat(2,1fr)}th,td{padding:8px}header h1{font-size:20px}}
 @media print{body *{visibility:hidden}#printArea,#printArea *{visibility:visible}#printArea{position:absolute;left:0;top:0;width:100%}header,.tabs,.admin-menu,button,input,select,textarea{display:none!important}.card{box-shadow:none;border:0}}
 </style>
 </head>
 <body>
-<header><h1>Açaí do Catarino</h1><p>PDV com Firebase Firestore: produtos, vendas e produção em tempo real.</p><div class="actions"><button id="loginBtn" class="light" onclick="openLogin()">Entrar</button><button id="logoutBtn" class="danger hidden" onclick="logout()">Sair</button><span id="userInfo" class="badge">Cliente</span></div><div id="firebaseWarning" class="offline">Firebase ainda não configurado. Cole suas configurações no código para sincronizar entre celulares.</div></header>
+<header>
+  <h1>Açaí do Catarino</h1>
+  <p id="headerSubtitle">Faça seu pedido pelo celular. Depois é só aguardar no balcão.</p>
+  <div class="actions">
+    <button id="loginBtn" class="light hidden" onclick="openLogin()">Entrar</button>
+    <button id="logoutBtn" class="danger hidden" onclick="logout()">Sair</button>
+    <span id="userInfo" class="badge">Cliente</span>
+  </div>
+  <div id="firebaseWarning" class="offline">Firebase ainda não configurado. Cole suas configurações no código para sincronizar entre celulares.</div>
+</header>
+
 <main>
-<nav class="tabs"><button class="tab-btn active" onclick="showMainTab('vendas',this)">Tela de Vendas</button><button id="producaoTab" class="tab-btn hidden" onclick="showMainTab('producao',this)">Produção</button><button id="admTab" class="tab-btn hidden" onclick="showMainTab('adm',this)">Área ADM</button></nav>
-<section id="login" class="section"><div class="card" style="max-width:460px;margin:auto"><h2>Login da equipe</h2><label>E-mail</label><input id="loginEmail" type="email" placeholder="email"><label>Senha</label><input id="loginPassword" type="password" placeholder="senha"><div class="actions"><button onclick="login()">Entrar</button><button class="light" onclick="goToSales()">Cancelar</button></div><p class="muted">Cliente não precisa fazer login.</p></div></section>
-<section id="vendas" class="section active"><div class="grid"><div><div class="card"><h2>Nova venda</h2><input id="searchProduct" placeholder="Buscar produto por nome, código ou categoria..." oninput="renderSaleProducts()"></div><div id="saleProducts" class="products-grid"></div></div><aside><div class="card"><h2>Carrinho</h2><div id="cartItems"></div><div class="totals"><label>Nome do cliente / mesa / retirada</label><input id="customerName" placeholder="Ex: Mesa 4, João, Retirada balcão"><label>Observações do pedido</label><textarea id="orderNotes" placeholder="Ex: Sem banana, sem leite condensado..."></textarea><div>Subtotal: <strong id="subtotal">R$ 0,00</strong></div><label>Desconto</label><input id="discount" type="number" min="0" step="0.01" value="0" oninput="renderCart()"><div>Total:</div><div class="total-big" id="total">R$ 0,00</div><label>Forma de pagamento</label><select id="paymentMethod"><option>Dinheiro</option><option>PIX</option><option>Cartão de Débito</option><option>Cartão de Crédito</option></select><label>Valor recebido</label><input id="amountPaid" type="number" min="0" step="0.01" value="0" oninput="renderCart()"><div>Troco: <strong id="change">R$ 0,00</strong></div></div><div class="actions"><button class="success" onclick="finishSale()">Finalizar venda</button><button class="light" onclick="clearCart()">Limpar</button></div></div><div id="printArea" class="card"><h3>Último recibo</h3><div id="receipt" class="receipt">Nenhuma venda finalizada ainda.</div><div class="actions"><button onclick="window.print()">Imprimir recibo</button></div></div></aside></div></section>
-<section id="producao" class="section"><div class="card"><h2>Tela de Produção</h2><p class="muted">Os pedidos aparecem aqui em tempo real após finalizar a venda.</p><div class="actions"><button onclick="filterProduction('ativos')">Pedidos ativos</button><button class="light" onclick="filterProduction('todos')">Todos</button><button class="success" onclick="filterProduction('entregue')">Entregues</button></div></div><div id="productionOrders" class="order-grid"></div></section>
-<section id="adm" class="section"><div class="card"><h2>Área Administrativa</h2><p class="muted">Gestão do Açaí do Catarino.</p><div class="admin-menu"><button onclick="showAdminPanel('produtosAdm')">Produtos</button><button onclick="showAdminPanel('historicoAdm')">Histórico</button><button onclick="showAdminPanel('relatoriosAdm')">Relatórios</button><button onclick="showAdminPanel('configAdm')">Firebase</button></div></div>
-<div id="produtosAdm" class="admin-panel active"><div class="grid"><div class="card"><h2>Cadastro de produtos</h2><input type="hidden" id="editingProductId"><div class="form-grid"><div><label>Código</label><input id="productCode" placeholder="Ex: 001"></div><div><label>Nome</label><input id="productName" placeholder="Ex: Açaí 300ml"></div><div><label>Preço</label><input id="productPrice" type="number" min="0" step="0.01" placeholder="Ex: 12.00"></div><div><label>Estoque</label><input id="productStock" type="number" min="0" step="1" placeholder="Ex: 100"></div><div><label>Categoria</label><input id="productCategory" placeholder="Ex: Açaí, Adicional, Bebida"></div><div><label>Estoque mínimo</label><input id="productMinStock" type="number" min="0" step="1" value="5"></div><div class="full"><label>Descrição</label><textarea id="productDescription" placeholder="Descrição opcional"></textarea></div></div><div class="actions"><button onclick="saveProduct()">Salvar produto</button><button class="light" onclick="clearProductForm()">Cancelar/Limpar</button></div></div><div class="card"><h2>Produtos cadastrados</h2><input id="productListSearch" placeholder="Buscar na lista..." oninput="renderProductsTable()"><div id="productsTable"></div></div></div></div>
-<div id="historicoAdm" class="admin-panel"><div class="card"><h2>Histórico de vendas</h2><div id="salesHistory"></div></div></div>
-<div id="relatoriosAdm" class="admin-panel"><div class="card"><h2>Relatórios</h2><div id="reports"></div></div></div>
-<div id="configAdm" class="admin-panel"><div class="card"><h2>Configuração do Firebase</h2><div class="notice">Crie um projeto no Firebase, ative o Cloud Firestore e cole as configurações no bloco <strong>firebaseConfig</strong> dentro do código.</div><div class="danger-notice notice">As chaves abaixo precisam ser substituídas pelas suas.</div><pre class="receipt">const firebaseConfig = {
+<nav class="tabs">
+  <button class="tab-btn active" onclick="showMainTab('vendas',this)" id="vendasTab">Fazer Pedido</button>
+  <button id="producaoTab" class="tab-btn hidden" onclick="showMainTab('producao',this)">Produção</button>
+  <button id="admTab" class="tab-btn hidden" onclick="showMainTab('adm',this)">Área ADM</button>
+</nav>
+
+<section id="login" class="section">
+  <div class="card" style="max-width:460px;margin:auto">
+    <h2>Login da equipe</h2>
+    <label>E-mail</label><input id="loginEmail" type="email" placeholder="email">
+    <label>Senha</label><input id="loginPassword" type="password" placeholder="senha">
+    <div class="actions">
+      <button onclick="login()">Entrar</button>
+      <button class="light" onclick="goToSales()">Cancelar</button>
+    </div>
+    <p class="muted">Cliente não precisa fazer login.</p>
+  </div>
+</section>
+
+<section id="vendas" class="section active">
+  <div class="grid">
+    <div>
+      <div class="card">
+        <h2 id="saleTitle">Faça seu pedido</h2>
+        <p id="customerHelp" class="notice customer-notice">Escolha seus produtos, informe seu nome e envie o pedido. O pagamento será combinado no balcão.</p>
+        <input id="searchProduct" placeholder="Buscar produto..." oninput="renderSaleProducts()">
+      </div>
+      <div id="saleProducts" class="products-grid"></div>
+    </div>
+
+    <aside>
+      <div class="card">
+        <h2>Carrinho</h2>
+        <div id="cartItems"></div>
+        <div class="totals">
+          <label>Nome do cliente / mesa / retirada</label>
+          <input id="customerName" placeholder="Ex: João, Mesa 4, Retirada balcão">
+
+          <label>Observações do pedido</label>
+          <textarea id="orderNotes" placeholder="Ex: Sem banana, sem leite condensado..."></textarea>
+
+          <div>Subtotal: <strong id="subtotal">R$ 0,00</strong></div>
+
+          <div class="admin-only">
+            <label>Desconto</label>
+            <input id="discount" type="number" min="0" step="0.01" value="0" oninput="renderCart()">
+          </div>
+
+          <div>Total:</div>
+          <div class="total-big" id="total">R$ 0,00</div>
+
+          <div class="admin-only">
+            <label>Forma de pagamento</label>
+            <select id="paymentMethod">
+              <option>Dinheiro</option>
+              <option>PIX</option>
+              <option>Cartão de Débito</option>
+              <option>Cartão de Crédito</option>
+              <option>Pagar no balcão</option>
+            </select>
+
+            <label>Valor recebido</label>
+            <input id="amountPaid" type="number" min="0" step="0.01" value="0" oninput="renderCart()">
+            <div>Troco: <strong id="change">R$ 0,00</strong></div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="finishSaleBtn" class="success" onclick="finishSale()">Enviar pedido</button>
+          <button class="light" onclick="clearCart()">Limpar</button>
+        </div>
+      </div>
+
+      <div id="printArea" class="card admin-only">
+        <h3>Último recibo</h3>
+        <div id="receipt" class="receipt">Nenhuma venda finalizada ainda.</div>
+        <div class="actions"><button onclick="window.print()">Imprimir recibo</button></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section id="producao" class="section">
+  <div class="card">
+    <h2>Tela de Produção</h2>
+    <p class="muted">Os pedidos aparecem aqui em tempo real após finalizar a venda.</p>
+    <div class="actions">
+      <button onclick="filterProduction('ativos')">Pedidos ativos</button>
+      <button class="light" onclick="filterProduction('todos')">Todos</button>
+      <button class="success" onclick="filterProduction('entregue')">Entregues</button>
+    </div>
+  </div>
+  <div id="productionOrders" class="order-grid"></div>
+</section>
+
+<section id="adm" class="section">
+  <div class="card">
+    <h2>Área Administrativa</h2>
+    <p class="muted">Gestão do Açaí do Catarino.</p>
+    <div class="admin-menu">
+      <button onclick="showAdminPanel('produtosAdm')">Produtos</button>
+      <button onclick="showAdminPanel('historicoAdm')">Histórico</button>
+      <button onclick="showAdminPanel('relatoriosAdm')">Relatórios</button>
+      <button onclick="showAdminPanel('configAdm')">Firebase</button>
+    </div>
+  </div>
+
+  <div id="produtosAdm" class="admin-panel active">
+    <div class="grid">
+      <div class="card">
+        <h2>Cadastro de produtos</h2>
+        <input type="hidden" id="editingProductId">
+        <div class="form-grid">
+          <div><label>Código</label><input id="productCode" placeholder="Ex: 001"></div>
+          <div><label>Nome</label><input id="productName" placeholder="Ex: Açaí 300ml"></div>
+          <div><label>Preço</label><input id="productPrice" type="number" min="0" step="0.01" placeholder="Ex: 12.00"></div>
+          <div><label>Estoque</label><input id="productStock" type="number" min="0" step="1" placeholder="Ex: 100"></div>
+          <div><label>Categoria</label><input id="productCategory" placeholder="Ex: Açaí, Adicional, Bebida"></div>
+          <div><label>Estoque mínimo</label><input id="productMinStock" type="number" min="0" step="1" value="5"></div>
+          <div class="full"><label>Descrição</label><textarea id="productDescription" placeholder="Descrição opcional"></textarea></div>
+        </div>
+        <div class="actions">
+          <button onclick="saveProduct()">Salvar produto</button>
+          <button class="light" onclick="clearProductForm()">Cancelar/Limpar</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Produtos cadastrados</h2>
+        <input id="productListSearch" placeholder="Buscar na lista..." oninput="renderProductsTable()">
+        <div id="productsTable"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="historicoAdm" class="admin-panel"><div class="card"><h2>Histórico de vendas</h2><div id="salesHistory"></div></div></div>
+  <div id="relatoriosAdm" class="admin-panel"><div class="card"><h2>Relatórios</h2><div id="reports"></div></div></div>
+  <div id="configAdm" class="admin-panel">
+    <div class="card">
+      <h2>Configuração do Firebase</h2>
+      <div class="notice">Crie um projeto no Firebase, ative o Cloud Firestore e cole as configurações no bloco <strong>firebaseConfig</strong> dentro do código.</div>
+      <div class="danger-notice notice">As chaves abaixo precisam ser substituídas pelas suas.</div>
+      <pre class="receipt">const firebaseConfig = {
   apiKey: "COLE_AQUI",
   authDomain: "COLE_AQUI",
   projectId: "COLE_AQUI",
   storageBucket: "COLE_AQUI",
   messagingSenderId: "COLE_AQUI",
   appId: "COLE_AQUI"
-};</pre></div></div>
+};</pre>
+    </div>
+  </div>
 </section>
+<div id="teamAccess" class="team-access">
+  <button onclick="openLogin()">Área da equipe</button>
+</div>
+
+<div id="orderConfirm" class="confirm-overlay hidden">
+  <div class="confirm-box">
+    <div class="confirm-icon">✅</div>
+    <h2>Pedido enviado!</h2>
+    <p>Seu pedido foi recebido com sucesso.</p>
+    <div id="confirmOrderNumber" class="confirm-number">#000000</div>
+    <p>Aguarde o preparo no balcão.</p>
+    <div class="actions" style="justify-content:center">
+      <button class="success" onclick="closeOrderConfirm()">Ok, entendi</button>
+    </div>
+  </div>
+</div>
 </main>
+
 <script type="module">
-import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";import{getAuth,signInWithEmailAndPassword,signOut,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";import{getFirestore,collection,doc,getDoc,addDoc,setDoc,updateDoc,deleteDoc,onSnapshot,serverTimestamp,query,orderBy,runTransaction}from"https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import{getAuth,signInWithEmailAndPassword,signOut,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+import{getFirestore,collection,doc,addDoc,setDoc,updateDoc,deleteDoc,onSnapshot,serverTimestamp,query,orderBy,runTransaction}from"https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
 const firebaseConfig={apiKey:"AIzaSyDfMCZH0Kv57EN7HxYafvW2eXtkpB4TF_U",authDomain:"acai-do-catarino.firebaseapp.com",projectId:"acai-do-catarino",storageBucket:"acai-do-catarino.firebasestorage.app",messagingSenderId:"624038766521",appId:"1:624038766521:web:43c2278569ca6fd13a7868"};
-const configured=firebaseConfig.apiKey!=="COLE_AQUI"&&firebaseConfig.projectId!=="COLE_AQUI";let db=null,auth=null,products=[],sales=[],cart=[],productionFilter="ativos",currentUser=null,currentRole="cliente";const fallbackKey="acai_do_catarino_local_fallback";
-if(!configured){document.getElementById("firebaseWarning").style.display="block";const local=loadLocal();products=local.products;sales=local.sales;renderAll()}else{const app=initializeApp(firebaseConfig);db=getFirestore(app);auth=getAuth(app);startSync();startAuth()}
-function loadLocal(){try{return JSON.parse(localStorage.getItem(fallbackKey))||demo()}catch{return demo()}}function demo(){return{products:[{id:"demo-acai-300",code:"001",name:"Açaí 300ml",price:12,stock:100,minStock:5,category:"Açaí",description:"Produto de exemplo."}],sales:[]}}function saveLocal(){localStorage.setItem(fallbackKey,JSON.stringify({products,sales}))}
-function startSync(){onSnapshot(query(collection(db,"products"),orderBy("name")),s=>{products=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()},e=>alert("Erro ao carregar produtos: "+e.message));onSnapshot(query(collection(db,"sales"),orderBy("createdAt","desc")),s=>{sales=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()},e=>alert("Erro ao carregar vendas: "+e.message))}
-function money(v){return Number(v||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2)}function esc(t){return String(t??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}function saleDate(s){if(s.createdAt?.toDate)return s.createdAt.toDate();if(s.createdAt?.seconds)return new Date(s.createdAt.seconds*1000);if(s.date)return new Date(s.date);return new Date()}function orderNumber(){return String((sales.length||0)+1).padStart(4,"0")}
-window.showMainTab=(id,btn)=>{if(id==="producao"&&!canProduction())return alert("Acesso restrito.");if(id==="adm"&&!canAdmin())return alert("Acesso restrito.");document.querySelectorAll("main>.section").forEach(s=>s.classList.remove("active"));document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));document.getElementById(id).classList.add("active");btn.classList.add("active");renderAll()};window.showAdminPanel=id=>{if(!canAdmin())return alert("Acesso restrito.");document.querySelectorAll(".admin-panel").forEach(p=>p.classList.remove("active"));document.getElementById(id).classList.add("active");renderAll()};function renderAll(){renderSaleProducts();renderCart();renderProductsTable();renderSalesHistory();renderReports();renderProductionOrders();applyAccess()}
-window.renderSaleProducts=()=>{const box=document.getElementById("saleProducts"),term=(document.getElementById("searchProduct")?.value||"").toLowerCase();const list=products.filter(p=>[p.name,p.code,p.category].join(" ").toLowerCase().includes(term));box.innerHTML=list.length?list.map(p=>`<div class="product-card"><h4>${esc(p.name)}</h4><div class="muted">Código: ${esc(p.code||"-")}</div><div class="muted">Categoria: ${esc(p.category||"-")}</div><div class="price">${money(p.price)}</div><div class="badge ${Number(p.stock)<=Number(p.minStock||0)?"low-stock":""}">Estoque: ${p.stock??0}</div><div class="actions"><button ${Number(p.stock||0)<=0?"disabled":""} onclick="addToCart('${p.id}')">Adicionar</button></div></div>`).join(""):'<div class="empty">Nenhum produto encontrado.</div>'};
-window.addToCart=id=>{const p=products.find(x=>x.id===id);if(!p||Number(p.stock||0)<=0)return alert("Produto sem estoque.");const item=cart.find(i=>i.productId===id);if(item){if(item.qty+1>Number(p.stock||0))return alert("Quantidade maior que o estoque disponível.");item.qty++}else cart.push({productId:p.id,code:p.code||"",name:p.name,price:Number(p.price||0),qty:1});renderCart()};window.changeQty=(id,qty)=>{const p=products.find(x=>x.id===id),item=cart.find(i=>i.productId===id);if(!p||!item)return;qty=Number(qty);if(qty<=0)cart=cart.filter(i=>i.productId!==id);else if(qty>Number(p.stock||0)){alert("Quantidade maior que o estoque disponível.");item.qty=Number(p.stock||0)}else item.qty=qty;renderCart()};window.removeFromCart=id=>{cart=cart.filter(i=>i.productId!==id);renderCart()};window.clearCart=()=>{cart=[];discount.value=0;amountPaid.value=0;customerName.value="";orderNotes.value="";renderCart()};function subtotal(){return cart.reduce((s,i)=>s+i.price*i.qty,0)}
-window.renderCart=()=>{const box=document.getElementById("cartItems");box.innerHTML=cart.length?`<table><thead><tr><th>Produto</th><th>Qtd</th><th>Total</th><th></th></tr></thead><tbody>${cart.map(i=>`<tr><td>${esc(i.name)}<br><span class="muted">${money(i.price)}</span></td><td><input style="width:70px" type="number" min="1" value="${i.qty}" onchange="changeQty('${i.productId}',this.value)"></td><td>${money(i.price*i.qty)}</td><td><button class="danger" onclick="removeFromCart('${i.productId}')">X</button></td></tr>`).join("")}</tbody></table>`:'<div class="empty">Carrinho vazio.</div>';const sub=subtotal(),disc=Number(discount.value||0),tot=Math.max(0,sub-disc),paid=Number(amountPaid.value||0);document.getElementById("subtotal").textContent=money(sub);total.textContent=money(tot);change.textContent=money(Math.max(0,paid-tot))};
-window.finishSale=async()=>{if(!cart.length)return alert("Adicione produtos ao carrinho.");const sub=subtotal(),disc=Number(discount.value||0),tot=Math.max(0,sub-disc),pay=paymentMethod.value,paid=Number(amountPaid.value||0);if(pay==="Dinheiro"&&paid<tot)return alert("Valor recebido menor que o total.");const sale={orderNumber:orderNumber(),date:new Date().toISOString(),customerName:customerName.value.trim(),orderNotes:orderNotes.value.trim(),status:"Recebido",statusUpdatedAt:new Date().toISOString(),items:JSON.parse(JSON.stringify(cart)),subtotal:sub,discount:disc,total:tot,paymentMethod:pay,amountPaid:paid,change:Math.max(0,paid-tot)};try{if(db){await runTransaction(db,async t=>{for(const item of cart){const ref=doc(db,"products",item.productId),snap=await t.get(ref);if(!snap.exists())throw new Error("Produto não encontrado: "+item.name);const st=Number(snap.data().stock||0);if(st<item.qty)throw new Error("Estoque insuficiente para: "+item.name);t.update(ref,{stock:st-item.qty,updatedAt:serverTimestamp()})}t.set(doc(collection(db,"sales")),{...sale,createdAt:serverTimestamp()})})}else{sale.id=uid();products=products.map(p=>{const item=cart.find(i=>i.productId===p.id);return item?{...p,stock:Number(p.stock||0)-item.qty}:p});sales.unshift(sale);saveLocal()}receipt.textContent=makeReceipt(sale);clearCart();renderAll();alert("Venda finalizada! O pedido foi enviado para a produção.")}catch(e){alert("Erro ao finalizar venda: "+e.message)}};
-function makeReceipt(s){const lines=["====== AÇAÍ DO CATARINO ======","Pedido: #"+(s.orderNumber||"-"),"Data: "+(s.date?new Date(s.date).toLocaleString("pt-BR"):new Date().toLocaleString("pt-BR"))];if(s.customerName)lines.push("Cliente/Mesa: "+s.customerName);if(s.orderNotes)lines.push("Obs: "+s.orderNotes);lines.push("-----------------------------");(s.items||[]).forEach(i=>{lines.push(`${i.qty}x ${i.name}`);lines.push(`   ${money(i.price)} cada = ${money(i.price*i.qty)}`)});lines.push("-----------------------------","Subtotal: "+money(s.subtotal),"Desconto: "+money(s.discount),"TOTAL: "+money(s.total),"Pagamento: "+s.paymentMethod,"Recebido: "+money(s.amountPaid),"Troco: "+money(s.change),"Status: "+(s.status||"Recebido"),"=============================","Obrigado pela preferência!");return lines.join("\n")}
-window.filterProduction=t=>{productionFilter=t;renderProductionOrders()};function cls(st){if(st==="Em produção")return"status-producao";if(st==="Pronto")return"status-pronto";if(st==="Entregue")return"status-entregue";return"status-recebido"}window.updateOrderStatus=async(id,status)=>{if(!canProduction())return alert("Acesso restrito.");try{if(db)await updateDoc(doc(db,"sales",id),{status,statusUpdatedAt:new Date().toISOString(),updatedAt:serverTimestamp()});else{sales=sales.map(s=>s.id===id?{...s,status,statusUpdatedAt:new Date().toISOString()}:s);saveLocal();renderAll()}}catch(e){alert("Erro ao atualizar status: "+e.message)}};
-function renderProductionOrders(){const box=document.getElementById("productionOrders");if(!box)return;let list=[...sales];if(productionFilter==="ativos")list=list.filter(s=>s.status!=="Entregue");if(productionFilter==="entregue")list=list.filter(s=>s.status==="Entregue");box.innerHTML=list.length?list.map(s=>`<div class="order-card"><div class="order-header"><div><div class="order-number">Pedido #${esc(s.orderNumber||"-")}</div><div class="muted">${saleDate(s).toLocaleString("pt-BR")}</div>${s.customerName?`<div><strong>Cliente/Mesa:</strong> ${esc(s.customerName)}</div>`:""}</div><span class="badge ${cls(s.status)}">${esc(s.status||"Recebido")}</span></div><div class="order-items">${(s.items||[]).map(i=>`<div><strong>${i.qty}x</strong> ${esc(i.name)}</div>`).join("")}</div>${s.orderNotes?`<div class="notice"><strong>Obs:</strong> ${esc(s.orderNotes)}</div>`:""}<div class="muted">Total: <strong>${money(s.total)}</strong></div><div class="actions"><button onclick="updateOrderStatus('${s.id}','Recebido')">Recebido</button><button class="warning" onclick="updateOrderStatus('${s.id}','Em produção')">Em produção</button><button onclick="updateOrderStatus('${s.id}','Pronto')">Pronto</button><button class="success" onclick="updateOrderStatus('${s.id}','Entregue')">Entregue</button></div></div>`).join(""):'<div class="empty">Nenhum pedido nesta lista.</div>'}
-window.saveProduct=async()=>{if(!canAdmin())return alert("Acesso restrito.");const id=editingProductId.value;const p={code:productCode.value.trim(),name:productName.value.trim(),price:Number(productPrice.value||0),stock:Number(productStock.value||0),minStock:Number(productMinStock.value||0),category:productCategory.value.trim(),description:productDescription.value.trim(),updatedAt:db?serverTimestamp():new Date().toISOString()};if(!p.name)return alert("Informe o nome do produto.");try{if(db){if(id)await setDoc(doc(db,"products",id),p,{merge:true});else await addDoc(collection(db,"products"),{...p,createdAt:serverTimestamp()})}else{if(id)products=products.map(x=>x.id===id?{id,...p}:x);else products.push({id:uid(),...p});saveLocal()}clearProductForm();renderAll();alert("Produto salvo com sucesso!")}catch(e){alert("Erro ao salvar produto: "+e.message)}};window.editProduct=id=>{if(!canAdmin())return alert("Acesso restrito.");const p=products.find(x=>x.id===id);if(!p)return;showMainTab("adm",document.querySelectorAll(".tab-btn")[2]);showAdminPanel("produtosAdm");editingProductId.value=p.id;productCode.value=p.code||"";productName.value=p.name||"";productPrice.value=p.price||0;productStock.value=p.stock||0;productMinStock.value=p.minStock||0;productCategory.value=p.category||"";productDescription.value=p.description||"";scrollTo({top:0,behavior:"smooth"})};window.deleteProduct=async id=>{if(!canAdmin())return alert("Acesso restrito.");if(!confirm("Deseja excluir este produto?"))return;try{if(db)await deleteDoc(doc(db,"products",id));else{products=products.filter(p=>p.id!==id);saveLocal();renderAll()}}catch(e){alert("Erro ao excluir produto: "+e.message)}};window.clearProductForm=()=>{editingProductId.value="";productCode.value="";productName.value="";productPrice.value="";productStock.value="";productMinStock.value="5";productCategory.value="";productDescription.value=""};
-window.renderProductsTable=()=>{const box=document.getElementById("productsTable"),term=(productListSearch?.value||"").toLowerCase();const list=products.filter(p=>[p.name,p.code,p.category,p.description].join(" ").toLowerCase().includes(term));box.innerHTML=list.length?`<table><thead><tr><th>Código</th><th>Produto</th><th>Preço</th><th>Estoque</th><th>Ações</th></tr></thead><tbody>${list.map(p=>`<tr><td>${esc(p.code||"-")}</td><td><strong>${esc(p.name)}</strong><br><span class="muted">${esc(p.category||"-")}</span></td><td>${money(p.price)}</td><td><span class="badge ${Number(p.stock)<=Number(p.minStock||0)?"low-stock":""}">${p.stock??0}</span></td><td><button onclick="editProduct('${p.id}')">Editar</button> <button class="danger" onclick="deleteProduct('${p.id}')">Excluir</button></td></tr>`).join("")}</tbody></table>`:'<div class="empty">Nenhum produto cadastrado.</div>'};
-function renderSalesHistory(){const box=document.getElementById("salesHistory");box.innerHTML=sales.length?`<table><thead><tr><th>Pedido</th><th>Data</th><th>Status</th><th>Itens</th><th>Pagamento</th><th>Total</th><th>Recibo</th></tr></thead><tbody>${sales.map(s=>`<tr><td>#${esc(s.orderNumber||"-")}</td><td>${saleDate(s).toLocaleString("pt-BR")}</td><td><span class="badge ${cls(s.status)}">${esc(s.status||"Recebido")}</span></td><td>${(s.items||[]).reduce((sum,i)=>sum+Number(i.qty||0),0)}</td><td>${esc(s.paymentMethod)}</td><td><strong>${money(s.total)}</strong></td><td><button onclick="showReceipt('${s.id}')">Ver</button></td></tr>`).join("")}</tbody></table>`:'<div class="empty">Nenhuma venda registrada ainda.</div>'}window.showReceipt=id=>{const s=sales.find(x=>x.id===id);if(!s)return;receipt.textContent=makeReceipt(s);showMainTab("vendas",document.querySelectorAll(".tab-btn")[0]);alert("Recibo carregado na tela de vendas.")};
-function renderReports(){const totalSales=sales.reduce((sum,s)=>sum+Number(s.total||0),0),totalItems=sales.reduce((sum,s)=>sum+(s.items||[]).reduce((a,i)=>a+Number(i.qty||0),0),0),low=products.filter(p=>Number(p.stock||0)<=Number(p.minStock||0)),active=sales.filter(s=>s.status!=="Entregue").length;const by={};sales.forEach(s=>by[s.paymentMethod]=(by[s.paymentMethod]||0)+Number(s.total||0));reports.innerHTML=`<div class="form-grid"><div class="card"><h3>Total vendido</h3><div class="total-big">${money(totalSales)}</div></div><div class="card"><h3>Vendas registradas</h3><div class="total-big">${sales.length}</div></div><div class="card"><h3>Pedidos ativos</h3><div class="total-big">${active}</div></div><div class="card"><h3>Itens vendidos</h3><div class="total-big">${totalItems}</div></div></div><div class="card"><h3>Vendas por forma de pagamento</h3>${Object.keys(by).length?`<table><tbody>${Object.entries(by).map(([k,v])=>`<tr><td>${esc(k)}</td><td><strong>${money(v)}</strong></td></tr>`).join("")}</tbody></table>`:'<div class="empty">Nenhuma venda ainda.</div>'}</div><div class="card"><h3>Produtos com estoque baixo</h3>${low.length?`<table><thead><tr><th>Produto</th><th>Estoque</th><th>Mínimo</th></tr></thead><tbody>${low.map(p=>`<tr><td>${esc(p.name)}</td><td>${p.stock}</td><td>${p.minStock}</td></tr>`).join("")}</tbody></table>`:'<div class="empty">Nenhum produto com estoque baixo.</div>'}</div>`}
-const ADMIN_EMAILS = [
-  "catarinogrosserferreira@gmail.com"
-];
 
-function canAdmin(){
-  return currentUser && ADMIN_EMAILS.includes(currentUser.email);
+const ADMIN_EMAILS=["catarinogrosserferreira@gmail.com"];
+const configured=firebaseConfig.apiKey!=="COLE_AQUI"&&firebaseConfig.projectId!=="COLE_AQUI";
+let db=null,auth=null,products=[],sales=[],cart=[],productionFilter="ativos",currentUser=null,currentRole="cliente";
+const fallbackKey="acai_do_catarino_local_fallback";
+
+if(!configured){
+  document.getElementById("firebaseWarning").style.display="block";
+  const local=loadLocal();products=local.products;sales=local.sales;renderAll();
+}else{
+  const app=initializeApp(firebaseConfig);
+  db=getFirestore(app);
+  auth=getAuth(app);
+  startSync();
+  startAuth();
 }
 
-function canProduction(){
-  return canAdmin();
+function loadLocal(){try{return JSON.parse(localStorage.getItem(fallbackKey))||demo()}catch{return demo()}}
+function demo(){return{products:[{id:"demo-acai-300",code:"001",name:"Açaí 300ml",price:12,stock:100,minStock:5,category:"Açaí",description:"Produto de exemplo."}],sales:[]}}
+function saveLocal(){localStorage.setItem(fallbackKey,JSON.stringify({products,sales}))}
+
+function startSync(){
+  onSnapshot(query(collection(db,"products"),orderBy("name")),s=>{
+    products=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()
+  },e=>alert("Erro ao carregar produtos: "+e.message));
+
+  onSnapshot(query(collection(db,"sales"),orderBy("createdAt","desc")),s=>{
+    sales=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()
+  },e=>alert("Erro ao carregar vendas: "+e.message))
 }
+
+function money(v){return Number(v||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2)}
+function esc(t){return String(t??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
+function saleDate(s){if(s.createdAt?.toDate)return s.createdAt.toDate();if(s.createdAt?.seconds)return new Date(s.createdAt.seconds*1000);if(s.date)return new Date(s.date);return new Date()}
+function orderNumber(){return String(Date.now()).slice(-6)}
+
+function canAdmin(){return currentUser&&ADMIN_EMAILS.includes(currentUser.email)}
+function canProduction(){return canAdmin()}
+
+window.showMainTab=(id,btn)=>{
+  if(id==="producao"&&!canProduction())return alert("Acesso restrito.");
+  if(id==="adm"&&!canAdmin())return alert("Acesso restrito.");
+  document.querySelectorAll("main>.section").forEach(s=>s.classList.remove("active"));
+  document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  btn.classList.add("active");
+  renderAll()
+};
+
+window.showAdminPanel=id=>{
+  if(!canAdmin())return alert("Acesso restrito.");
+  document.querySelectorAll(".admin-panel").forEach(p=>p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  renderAll()
+};
+
+function renderAll(){
+  renderSaleProducts();
+  renderCart();
+  renderProductsTable();
+  renderSalesHistory();
+  renderReports();
+  renderProductionOrders();
+  applyAccess()
+}
+
+window.renderSaleProducts=()=>{
+  const box=document.getElementById("saleProducts"),term=(document.getElementById("searchProduct")?.value||"").toLowerCase();
+  const isAdmin=canAdmin();
+  const list=products.filter(p=>[p.name,p.code,p.category].join(" ").toLowerCase().includes(term));
+  box.innerHTML=list.length?list.map(p=>`
+    <div class="product-card">
+      <h4>${esc(p.name)}</h4>
+      <div class="muted">Categoria: ${esc(p.category||"-")}</div>
+      ${p.description?`<div class="muted">${esc(p.description)}</div>`:""}
+      <div class="price">${money(p.price)}</div>
+      ${isAdmin?`<div class="badge ${Number(p.stock)<=Number(p.minStock||0)?"low-stock":""}">Estoque: ${p.stock??0}</div>`:""}
+      <div class="actions"><button ${Number(p.stock||0)<=0?"disabled":""} onclick="addToCart('${p.id}')">${Number(p.stock||0)<=0?"Indisponível":"Adicionar"}</button></div>
+    </div>`).join(""):'<div class="empty">Nenhum produto encontrado.</div>'
+};
+
+window.addToCart=id=>{
+  const p=products.find(x=>x.id===id);
+  if(!p||Number(p.stock||0)<=0)return alert("Produto indisponível.");
+  const item=cart.find(i=>i.productId===id);
+  if(item){
+    if(item.qty+1>Number(p.stock||0))return alert("Quantidade maior que o disponível.");
+    item.qty++
+  }else cart.push({productId:p.id,code:p.code||"",name:p.name,price:Number(p.price||0),qty:1});
+  renderCart()
+};
+
+window.changeQty=(id,qty)=>{
+  const p=products.find(x=>x.id===id),item=cart.find(i=>i.productId===id);
+  if(!p||!item)return;
+  qty=Number(qty);
+  if(qty<=0)cart=cart.filter(i=>i.productId!==id);
+  else if(qty>Number(p.stock||0)){alert("Quantidade maior que o disponível.");item.qty=Number(p.stock||0)}
+  else item.qty=qty;
+  renderCart()
+};
+
+window.removeFromCart=id=>{cart=cart.filter(i=>i.productId!==id);renderCart()};
+
+window.clearCart=()=>{
+  cart=[];
+  discount.value=0;
+  amountPaid.value=0;
+  customerName.value="";
+  orderNotes.value="";
+  renderCart()
+};
+
+function subtotal(){return cart.reduce((s,i)=>s+i.price*i.qty,0)}
+
+window.renderCart=()=>{
+  const box=document.getElementById("cartItems");
+  box.innerHTML=cart.length?`<table><thead><tr><th>Produto</th><th>Qtd</th><th>Total</th><th></th></tr></thead><tbody>${cart.map(i=>`<tr><td>${esc(i.name)}<br><span class="muted">${money(i.price)}</span></td><td><input style="width:70px" type="number" min="1" value="${i.qty}" onchange="changeQty('${i.productId}',this.value)"></td><td>${money(i.price*i.qty)}</td><td><button class="danger" onclick="removeFromCart('${i.productId}')">X</button></td></tr>`).join("")}</tbody></table>`:'<div class="empty">Carrinho vazio.</div>';
+
+  const sub=subtotal();
+  const disc=canAdmin()?Number(discount.value||0):0;
+  const tot=Math.max(0,sub-disc);
+  const paid=canAdmin()?Number(amountPaid.value||0):0;
+  document.getElementById("subtotal").textContent=money(sub);
+  total.textContent=money(tot);
+  change.textContent=money(Math.max(0,paid-tot))
+};
+
+window.finishSale=async()=>{
+  if(!cart.length)return alert("Adicione produtos ao carrinho.");
+  if(!customerName.value.trim())return alert("Informe seu nome ou número da mesa.");
+
+  const isAdmin=canAdmin();
+  const sub=subtotal();
+  const disc=isAdmin?Number(discount.value||0):0;
+  const tot=Math.max(0,sub-disc);
+  const pay=isAdmin?paymentMethod.value:"Pagar no balcão";
+  const paid=isAdmin?Number(amountPaid.value||0):0;
+
+  if(isAdmin&&pay==="Dinheiro"&&paid<tot)return alert("Valor recebido menor que o total.");
+
+  const sale={
+    orderNumber:orderNumber(),
+    date:new Date().toISOString(),
+    customerName:customerName.value.trim(),
+    orderNotes:orderNotes.value.trim(),
+    status:"Recebido",
+    statusUpdatedAt:new Date().toISOString(),
+    items:JSON.parse(JSON.stringify(cart)),
+    subtotal:sub,
+    discount:disc,
+    total:tot,
+    paymentMethod:pay,
+    amountPaid:paid,
+    change:isAdmin?Math.max(0,paid-tot):0,
+    source:isAdmin?"PDV":"Cliente QR Code"
+  };
+
+  try{
+    if(db){
+      await runTransaction(db,async t=>{
+        const checks=[];
+
+        for(const item of cart){
+          const ref=doc(db,"products",item.productId);
+          const snap=await t.get(ref);
+
+          if(!snap.exists())throw new Error("Produto não encontrado: "+item.name);
+
+          const st=Number(snap.data().stock||0);
+
+          if(st<item.qty)throw new Error("Estoque insuficiente para: "+item.name);
+
+          checks.push({ref,stock:st,item});
+        }
+
+        for(const check of checks){
+          t.update(check.ref,{
+            stock:check.stock-check.item.qty,
+            updatedAt:serverTimestamp()
+          });
+        }
+
+        t.set(doc(collection(db,"sales")),{...sale,createdAt:serverTimestamp()})
+      })
+    }else{
+      sale.id=uid();
+      products=products.map(p=>{const item=cart.find(i=>i.productId===p.id);return item?{...p,stock:Number(p.stock||0)-item.qty}:p});
+      sales.unshift(sale);
+      saveLocal()
+    }
+
+    receipt.textContent=makeReceipt(sale);
+    const sentOrderNumber=sale.orderNumber;
+    clearCart();
+    renderAll();
+
+    if(isAdmin){
+      alert("Venda finalizada! O pedido foi enviado para a produção.");
+    }else{
+      showOrderConfirm(sentOrderNumber);
+    }
+  }catch(e){alert("Erro ao enviar pedido: "+e.message)}
+};
+
+function makeReceipt(s){
+  const lines=["====== AÇAÍ DO CATARINO ======","Pedido: #"+(s.orderNumber||"-"),"Data: "+(s.date?new Date(s.date).toLocaleString("pt-BR"):new Date().toLocaleString("pt-BR"))];
+  if(s.customerName)lines.push("Cliente/Mesa: "+s.customerName);
+  if(s.orderNotes)lines.push("Obs: "+s.orderNotes);
+  lines.push("-----------------------------");
+  (s.items||[]).forEach(i=>{lines.push(`${i.qty}x ${i.name}`);lines.push(`   ${money(i.price)} cada = ${money(i.price*i.qty)}`)});
+  lines.push("-----------------------------","Subtotal: "+money(s.subtotal),"Desconto: "+money(s.discount),"TOTAL: "+money(s.total),"Pagamento: "+s.paymentMethod,"Recebido: "+money(s.amountPaid),"Troco: "+money(s.change),"Status: "+(s.status||"Recebido"),"=============================","Obrigado pela preferência!");
+  return lines.join("\n")
+}
+
+window.filterProduction=t=>{productionFilter=t;renderProductionOrders()};
+function cls(st){if(st==="Em produção")return"status-producao";if(st==="Pronto")return"status-pronto";if(st==="Entregue")return"status-entregue";return"status-recebido"}
+
+window.updateOrderStatus=async(id,status)=>{
+  if(!canProduction())return alert("Acesso restrito.");
+  try{
+    if(db)await updateDoc(doc(db,"sales",id),{status,statusUpdatedAt:new Date().toISOString(),updatedAt:serverTimestamp()});
+    else{sales=sales.map(s=>s.id===id?{...s,status,statusUpdatedAt:new Date().toISOString()}:s);saveLocal();renderAll()}
+  }catch(e){alert("Erro ao atualizar status: "+e.message)}
+};
+
+function renderProductionOrders(){
+  const box=document.getElementById("productionOrders");if(!box)return;
+  let list=[...sales];
+  if(productionFilter==="ativos")list=list.filter(s=>s.status!=="Entregue");
+  if(productionFilter==="entregue")list=list.filter(s=>s.status==="Entregue");
+  box.innerHTML=list.length?list.map(s=>`<div class="order-card"><div class="order-header"><div><div class="order-number">Pedido #${esc(s.orderNumber||"-")}</div><div class="muted">${saleDate(s).toLocaleString("pt-BR")}</div>${s.customerName?`<div><strong>Cliente/Mesa:</strong> ${esc(s.customerName)}</div>`:""}</div><span class="badge ${cls(s.status)}">${esc(s.status||"Recebido")}</span></div><div class="order-items">${(s.items||[]).map(i=>`<div><strong>${i.qty}x</strong> ${esc(i.name)}</div>`).join("")}</div>${s.orderNotes?`<div class="notice"><strong>Obs:</strong> ${esc(s.orderNotes)}</div>`:""}<div class="muted">Total: <strong>${money(s.total)}</strong> • ${esc(s.paymentMethod||"-")}</div><div class="actions"><button onclick="updateOrderStatus('${s.id}','Recebido')">Recebido</button><button class="warning" onclick="updateOrderStatus('${s.id}','Em produção')">Em produção</button><button onclick="updateOrderStatus('${s.id}','Pronto')">Pronto</button><button class="success" onclick="updateOrderStatus('${s.id}','Entregue')">Entregue</button></div></div>`).join(""):'<div class="empty">Nenhum pedido nesta lista.</div>'
+}
+
+window.saveProduct=async()=>{
+  if(!canAdmin())return alert("Acesso restrito.");
+  const id=editingProductId.value;
+  const p={code:productCode.value.trim(),name:productName.value.trim(),price:Number(productPrice.value||0),stock:Number(productStock.value||0),minStock:Number(productMinStock.value||0),category:productCategory.value.trim(),description:productDescription.value.trim(),updatedAt:db?serverTimestamp():new Date().toISOString()};
+  if(!p.name)return alert("Informe o nome do produto.");
+  try{
+    if(db){if(id)await setDoc(doc(db,"products",id),p,{merge:true});else await addDoc(collection(db,"products"),{...p,createdAt:serverTimestamp()})}
+    else{if(id)products=products.map(x=>x.id===id?{id,...p}:x);else products.push({id:uid(),...p});saveLocal()}
+    clearProductForm();renderAll();alert("Produto salvo com sucesso!")
+  }catch(e){alert("Erro ao salvar produto: "+e.message)}
+};
+
+window.editProduct=id=>{
+  if(!canAdmin())return alert("Acesso restrito.");
+  const p=products.find(x=>x.id===id);if(!p)return;
+  showMainTab("adm",document.querySelectorAll(".tab-btn")[2]);
+  showAdminPanel("produtosAdm");
+  editingProductId.value=p.id;productCode.value=p.code||"";productName.value=p.name||"";productPrice.value=p.price||0;productStock.value=p.stock||0;productMinStock.value=p.minStock||0;productCategory.value=p.category||"";productDescription.value=p.description||"";
+  scrollTo({top:0,behavior:"smooth"})
+};
+
+window.deleteProduct=async id=>{
+  if(!canAdmin())return alert("Acesso restrito.");
+  if(!confirm("Deseja excluir este produto?"))return;
+  try{if(db)await deleteDoc(doc(db,"products",id));else{products=products.filter(p=>p.id!==id);saveLocal();renderAll()}}
+  catch(e){alert("Erro ao excluir produto: "+e.message)}
+};
+
+window.clearProductForm=()=>{
+  editingProductId.value="";productCode.value="";productName.value="";productPrice.value="";productStock.value="";productMinStock.value="5";productCategory.value="";productDescription.value=""
+};
+
+window.renderProductsTable=()=>{
+  const box=document.getElementById("productsTable"),term=(productListSearch?.value||"").toLowerCase();
+  const list=products.filter(p=>[p.name,p.code,p.category,p.description].join(" ").toLowerCase().includes(term));
+  box.innerHTML=list.length?`<table><thead><tr><th>Código</th><th>Produto</th><th>Preço</th><th>Estoque</th><th>Ações</th></tr></thead><tbody>${list.map(p=>`<tr><td>${esc(p.code||"-")}</td><td><strong>${esc(p.name)}</strong><br><span class="muted">${esc(p.category||"-")}</span></td><td>${money(p.price)}</td><td><span class="badge ${Number(p.stock)<=Number(p.minStock||0)?"low-stock":""}">${p.stock??0}</span></td><td><button onclick="editProduct('${p.id}')">Editar</button> <button class="danger" onclick="deleteProduct('${p.id}')">Excluir</button></td></tr>`).join("")}</tbody></table>`:'<div class="empty">Nenhum produto cadastrado.</div>'
+};
+
+function renderSalesHistory(){
+  const box=document.getElementById("salesHistory");
+  box.innerHTML=sales.length?`<table><thead><tr><th>Pedido</th><th>Data</th><th>Status</th><th>Itens</th><th>Pagamento</th><th>Total</th><th>Recibo</th></tr></thead><tbody>${sales.map(s=>`<tr><td>#${esc(s.orderNumber||"-")}</td><td>${saleDate(s).toLocaleString("pt-BR")}</td><td><span class="badge ${cls(s.status)}">${esc(s.status||"Recebido")}</span></td><td>${(s.items||[]).reduce((sum,i)=>sum+Number(i.qty||0),0)}</td><td>${esc(s.paymentMethod)}</td><td><strong>${money(s.total)}</strong></td><td><button onclick="showReceipt('${s.id}')">Ver</button></td></tr>`).join("")}</tbody></table>`:'<div class="empty">Nenhuma venda registrada ainda.</div>'
+}
+
+window.showReceipt=id=>{
+  const s=sales.find(x=>x.id===id);if(!s)return;
+  receipt.textContent=makeReceipt(s);
+  showMainTab("vendas",document.querySelectorAll(".tab-btn")[0]);
+  alert("Recibo carregado na tela de vendas.")
+};
+
+function renderReports(){
+  const totalSales=sales.reduce((sum,s)=>sum+Number(s.total||0),0),totalItems=sales.reduce((sum,s)=>sum+(s.items||[]).reduce((a,i)=>a+Number(i.qty||0),0),0),low=products.filter(p=>Number(p.stock||0)<=Number(p.minStock||0)),active=sales.filter(s=>s.status!=="Entregue").length;
+  const by={};sales.forEach(s=>by[s.paymentMethod]=(by[s.paymentMethod]||0)+Number(s.total||0));
+  reports.innerHTML=`<div class="form-grid"><div class="card"><h3>Total vendido</h3><div class="total-big">${money(totalSales)}</div></div><div class="card"><h3>Vendas registradas</h3><div class="total-big">${sales.length}</div></div><div class="card"><h3>Pedidos ativos</h3><div class="total-big">${active}</div></div><div class="card"><h3>Itens vendidos</h3><div class="total-big">${totalItems}</div></div></div><div class="card"><h3>Vendas por forma de pagamento</h3>${Object.keys(by).length?`<table><tbody>${Object.entries(by).map(([k,v])=>`<tr><td>${esc(k)}</td><td><strong>${money(v)}</strong></td></tr>`).join("")}</tbody></table>`:'<div class="empty">Nenhuma venda ainda.</div>'}</div><div class="card"><h3>Produtos com estoque baixo</h3>${low.length?`<table><thead><tr><th>Produto</th><th>Estoque</th><th>Mínimo</th></tr></thead><tbody>${low.map(p=>`<tr><td>${esc(p.name)}</td><td>${p.stock}</td><td>${p.minStock}</td></tr>`).join("")}</tbody></table>`:'<div class="empty">Nenhum produto com estoque baixo.</div>'}</div>`
+}
+
+function showOrderConfirm(orderNumber){
+  confirmOrderNumber.textContent="#"+(orderNumber||"------");
+  orderConfirm.classList.remove("hidden");
+}
+
+window.closeOrderConfirm=()=>{
+  orderConfirm.classList.add("hidden");
+};
 
 function applyAccess(){
-  const isAdmin = canAdmin();
+  const isAdmin=canAdmin();
 
-  producaoTab.classList.toggle("hidden", !isAdmin);
-  admTab.classList.toggle("hidden", !isAdmin);
-  loginBtn.classList.toggle("hidden", !!currentUser);
-  logoutBtn.classList.toggle("hidden", !currentUser);
+  producaoTab.classList.toggle("hidden",!isAdmin);
+  admTab.classList.toggle("hidden",!isAdmin);
+  loginBtn.classList.toggle("hidden",!isAdmin);
+  logoutBtn.classList.toggle("hidden",!currentUser);
+  teamAccess.classList.toggle("hidden",isAdmin);
 
-  userInfo.textContent = isAdmin
-    ? "Administrador: " + currentUser.email
-    : "Cliente";
+  document.querySelectorAll(".admin-only").forEach(el=>el.classList.toggle("hidden",!isAdmin));
+
+  userInfo.textContent=isAdmin?"Administrador: "+currentUser.email:"Cliente";
+  vendasTab.textContent=isAdmin?"Tela de Vendas":"Fazer Pedido";
+  saleTitle.textContent=isAdmin?"Nova venda":"Faça seu pedido";
+  finishSaleBtn.textContent=isAdmin?"Finalizar venda":"Enviar pedido";
+  headerSubtitle.textContent=isAdmin?"PDV com Firebase Firestore: produtos, vendas e produção em tempo real.":"Faça seu pedido pelo celular. Depois é só aguardar no balcão.";
+  customerHelp.classList.toggle("hidden",isAdmin);
 
   if(!isAdmin){
-    const active = document.querySelector(".section.active");
-    if(active && (active.id === "adm" || active.id === "producao")){
-      goToSales();
-    }
+    discount.value=0;
+    amountPaid.value=0;
+    const active=document.querySelector(".section.active");
+    if(active&&(active.id==="adm"||active.id==="producao"))goToSales()
   }
 }
 
 function startAuth(){
-  onAuthStateChanged(auth, user => {
-    currentUser = user;
-    currentRole = canAdmin() ? "admin" : "cliente";
+  onAuthStateChanged(auth,user=>{
+    currentUser=user;
+    currentRole=canAdmin()?"admin":"cliente";
     applyAccess();
-    renderAll();
-  });
+    renderAll()
+  })
 }
 
-window.openLogin = () => {
+window.openLogin=()=>{
   document.querySelectorAll("main>.section").forEach(s=>s.classList.remove("active"));
   document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
-  document.getElementById("login").classList.add("active");
+  document.getElementById("login").classList.add("active")
 };
 
-window.goToSales = () => {
-  showMainTab("vendas", document.querySelectorAll(".tab-btn")[0]);
-};
+window.goToSales=()=>{showMainTab("vendas",document.querySelectorAll(".tab-btn")[0])};
 
-window.login = async () => {
+window.login=async()=>{
   try{
-    const email = loginEmail.value.trim();
-    const password = loginPassword.value;
-
-    if(!email || !password){
-      return alert("Informe e-mail e senha.");
-    }
-
-    await signInWithEmailAndPassword(auth, email, password);
-    loginEmail.value = "";
-    loginPassword.value = "";
-    goToSales();
-  }catch(e){
-    alert("Erro ao entrar: " + e.message);
-  }
+    const email=loginEmail.value.trim(),password=loginPassword.value;
+    if(!email||!password)return alert("Informe e-mail e senha.");
+    await signInWithEmailAndPassword(auth,email,password);
+    loginEmail.value="";loginPassword.value="";
+    goToSales()
+  }catch(e){alert("Erro ao entrar: "+e.message)}
 };
 
-window.logout = async () => {
-  try{
-    await signOut(auth);
-    goToSales();
-  }catch(e){
-    alert("Erro ao sair: " + e.message);
-  }
+window.logout=async()=>{
+  try{await signOut(auth);goToSales()}
+  catch(e){alert("Erro ao sair: "+e.message)}
 };
+
 renderAll();
 </script>
 </body>
